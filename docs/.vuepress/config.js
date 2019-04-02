@@ -19,8 +19,11 @@ module.exports = (context) => ({
   ready () {
     const homepage = context.pages.find(p => p.path === '/')
     Object.assign(homepage.frontmatter, {
-      layout: 'Post',
-      aside: false,
+      layout: 'Favorite',
+      footer: false,
+      header: {
+        banner: false,
+      },
     })
   },
 
