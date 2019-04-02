@@ -4,6 +4,9 @@
   "main": "lib/index.js",
   "author": "Shigma <1700011071@pku.edu.cn>",
   "license": "MIT",
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/uzkk/favorite.git"
@@ -30,6 +33,6 @@
     "vuepress-theme-uzkk": "^1.0.0-alpha.10"
   },
   "dependencies": {
-    "@uzkk/vuepress-plugin-assets": "^0.0.2"
+    "@uzkk/favorite-assets": "^0.0.2"
   }
 }

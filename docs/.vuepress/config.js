@@ -3,9 +3,18 @@ module.exports = (context) => ({
 
   description: '东方 Project - 从入坑到入坟',
 
+  theme: 'uzkk',
+
   plugins: [
     require('../..'),
   ],
+
+  themeConfig: {
+    lang: {
+      home: '东方 Project - 从入坑到入坟',
+      posts: 'My Posts',
+    },
+  },
 
   evergreen: () => !context.isProd,
 })
