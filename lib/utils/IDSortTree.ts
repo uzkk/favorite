@@ -13,7 +13,7 @@ export default class IDSortTree {
   constructor () {}
 
   /**
-   * ルートアイテム設定をします
+   * 设置根节点
    */
   setupCTree () {
     this.cTree = new SortObject(0)
@@ -21,7 +21,7 @@ export default class IDSortTree {
   }
 
   /**
-   * キャラクターアイテムクラスのソート状態からIDツリーを生成します
+   * 根据角色当前的排名状态生成 ID 树
    * public void
    */
   initTree (cTree: SortObject, idNode: IDSortTree) {
@@ -36,7 +36,7 @@ export default class IDSortTree {
   }
 
   /**
-   * このIDツリーからキャラクターアイテムクラスのソート状態を復元します
+   * 从 ID 树恢复角色的排名状态
    * public SortTree
    */
   restoreCTree (idTree, cNode) {
@@ -55,7 +55,7 @@ export default class IDSortTree {
           break
         }
       }
-      // 謎の NOT FOUND
+      // 蜜汁 NOT FOUND
       if (cItem === null) {
         continue
       }
