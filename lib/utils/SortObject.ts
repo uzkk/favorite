@@ -1,41 +1,39 @@
 export default class SortObject {
-  constructor (...data) {
-    this.id = data[0]
-    this.name = data[1]
-    this.nick = data[2]
+  public isEven: boolean = false
+  public parent: SortObject = null
+  public children: SortObject[] = []
 
-    // 上/下位关系（父子结点？）
-    this.parent = null
-    this.isEven = false // 上位平局了？
-    this.children = []
-    this.meta = data[4]
-    this.tags = data[5]
-  }
+  constructor (
+    public id: number,
+    public name: string = '',
+    public nick: string = '',
+    public meta: Record<string, any> = {},
+    public tags: string[] = [],
+  ) {}
 
   /**
-  * 获得排名
-  */
+   * get current rank
+   */
   rank () {
-    if (this.parent) {
-      return (this.isEven ? this.parent.rank() : this.level())
-    }
-    return 0
+    return this.parent
+      ? this.isEven
+        ? this.parent.rank()
+        : this.level()
+      : 0
   }
 
   /**
-  * 获得结点所在深度
-  */
+   * get node depth
+   */
   level () {
-    if (this.parent) {
-      return this.parent.level() + 1
-    }
-    return 0
+    if (!this.parent) return 0
+    return this.parent.level() + 1
   }
 
   /**
   * 追加子结点
   */
-  add (child, doEvenAction) {
+  add (child: SortObject, doEvenAction = false) {
     // 首先断开child父结点与child的连接 1R-（这个1R-是个啥？？）
     if (child.parent) {
       child.parent.children.splice(child.parent.children.indexOf(child), 1)

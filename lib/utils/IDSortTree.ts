@@ -1,21 +1,22 @@
-import SortObject from './SortObject'
+// @ts-ignore
 import characters from '@dynamic/characters'
+import SortObject from './SortObject'
+
+declare let characters: [number, string, string, Record<string, any>, string[]][]
 
 export default class IDSortTree {
-  constructor () {
-    var rootID = -1
-    this.id = rootID
-    this.isEven = false // 上位と引き分けているか？
-    this.nodes = []
-    this.cTree = null
-  }
+  id: number = -1
+  isEven: boolean = false
+  nodes: IDSortTree[] = []
+  cTree: SortObject = null
+
+  constructor () {}
 
   /**
    * ルートアイテム設定をします
-   * public void
    */
   setupCTree () {
-    this.cTree = new SortObject('!root')
+    this.cTree = new SortObject(0)
     this.nodes = []
   }
 
@@ -23,7 +24,7 @@ export default class IDSortTree {
    * キャラクターアイテムクラスのソート状態からIDツリーを生成します
    * public void
    */
-  initTree (cTree, idNode) {
+  initTree (cTree: SortObject, idNode: IDSortTree) {
     var len = cTree.children.length
     for (var i = 0; i < len; i++) {
       var node = new IDSortTree()
