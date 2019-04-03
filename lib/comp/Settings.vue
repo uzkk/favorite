@@ -100,7 +100,7 @@ export default {
     this.ranks = ranks
     this.games = games
     this.stg = 'abcdefghijk'
-    this.other = 'ABCDE'
+    this.other = 'ABDE'
     this.old = 'FGHIJ'
     this.all = this.other + this.old + this.stg
   },
