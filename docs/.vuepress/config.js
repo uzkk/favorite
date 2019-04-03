@@ -16,5 +16,16 @@ module.exports = (context) => ({
     },
   },
 
+  ready () {
+    const homepage = context.pages.find(p => p.path === '/')
+    Object.assign(homepage.frontmatter, {
+      layout: 'Favorite',
+      footer: false,
+      header: {
+        banner: false,
+      },
+    })
+  },
+
   evergreen: () => !context.isProd,
 })
