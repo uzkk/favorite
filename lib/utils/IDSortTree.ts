@@ -13,7 +13,7 @@ export default class IDSortTree {
   constructor () {}
 
   /**
-   * 设置根节点
+   * set root node
    */
   setupCTree () {
     this.cTree = new SortObject(0)
@@ -21,7 +21,7 @@ export default class IDSortTree {
   }
 
   /**
-   * 根据角色当前的排名状态生成 ID 树
+   * generate ID tree from current character ranks
    * public void
    */
   initTree (cTree: SortObject, idNode: IDSortTree) {
@@ -36,7 +36,7 @@ export default class IDSortTree {
   }
 
   /**
-   * 从 ID 树恢复角色的排名状态
+   * restore character ranks from ID tree
    * public SortTree
    */
   restoreCTree (idTree, cNode) {
@@ -55,7 +55,7 @@ export default class IDSortTree {
           break
         }
       }
-      // 蜜汁 NOT FOUND
+      // why the hell is this NOT FOUND ???
       if (cItem === null) {
         continue
       }
