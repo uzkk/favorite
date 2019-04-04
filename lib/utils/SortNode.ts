@@ -4,7 +4,7 @@ export default class SortNode {
   public children: SortNode[] = []
 
   constructor (
-    public id: number,
+    public id: number = 0,
     public name: string = '',
     public nick: string = '',
     public appearence: string = '',

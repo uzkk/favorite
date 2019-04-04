@@ -36,5 +36,8 @@
     "@uzkk/favorite-assets": "^0.0.2",
     "ts-loader": "^5.3.3",
     "typescript": "^3.4.1"
+  },
+  "peerDependencies": {
+    "vuepress": "^1.0.0-alpha.46"
   }
 }

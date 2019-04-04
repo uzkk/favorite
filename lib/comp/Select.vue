@@ -66,7 +66,7 @@
 <script>
 
 import SortNode from '../utils/SortNode'
-import BackupTree from '../utils/BackupTree'
+import sort from '../utils/sort.mixin'
 import { characters } from '../data'
 import Character from './Character'
 import Button from './Button'
@@ -76,14 +76,9 @@ export default {
 
   components: { Character, Button },
 
-  props: ['gamelist', 'ranknum', 'face'],
+  mixins: [sort],
 
-  data: () => ({
-    currentPair: [],
-    questionCount: 1,
-    currentRank: 0,
-    isPrevious: false,
-  }),
+  props: ['gamelist', 'ranknum', 'face'],
 
   created () {
     this.root = new SortNode(0)
@@ -95,95 +90,25 @@ export default {
         }
       }
     }
-    this.currentPair = this.ask(this.root)
-    this.backupTree = new BackupTree().setup(this.root)
+    this.init()
   },
 
   methods: {
     backToSettings () {
       this.$emit('next', 'Settings')
     },
-    backup () {
-      this.backupPair = this.currentPair.slice()
-      this.backupTree.setup(this.root)
-    },
-    restore () {
-      this.currentPair = this.backupPair.slice()
-      this.backupPair = null
-      this.currentRank = 0
-      this.root = this.backupTree.restore()
-    },
-    ask (node, pair) {
-      if (pair) {
-        const left = node.findSortObjectById(pair[0].id)
-        const right = node.findSortObjectById(pair[1].id)
-        if (left !== null && right !== null) {
-          return [left, right]
-        }
-      }
-      if (node.children.length === 0) {
-        return false
-      }
-      if (node.children.length === 1) {
-        this.currentRank = node.level() + 1
-        return this.ask(node.children[0])
-      }
-      const both = [0, 0]
-      while (true) {
-        if (both[0] !== both[1]) {
-          break
-        }
-        for (const i of [0, 1]) {
-          both[i] = Math.floor(Math.random() * node.children.length)
-        }
-      }
-      return [node.children[both[0]], node.children[both[1]]]
-    },
-    nextPair (back) {
-      if (back) {
-        this.currentPair = this.ask(this.root, this.currentPair)
-      } else {
-        this.currentPair = this.ask(this.root)
-      }
-      if (this.currentPair && this.currentPair[1].level() <= this.ranknum) {
-        this.questionCount += 1
-        return true
-      }
-      return false
-    },
     moveOn (back) {
-      const { ranknum, face } = this
-      if (!this.nextPair(back)) {
-        let ranking = []
-        let node = this.root
-        for (let i = 0; i < ranknum; i++) {
-          node = node.children[0]
-          if (!node) {
-            break
-          }
-          ranking.push(node)
-        }
-        this.$emit('next', 'Result', { ranking, face })
+      if (this.getNextPair(back)) return
+
+      // move to next part
+      const ranking = []
+      let node = this.root
+      for (let i = 0; i < this.ranknum; i++) {
+        node = node.children[0]
+        if (!node) break
+        ranking.push(node)
       }
-    },
-    selectChar (index) {
-      this.backup()
-      this.currentPair[index].add(this.currentPair[1 - index], false)
-      this.isPrevious = false
-      this.moveOn(false)
-    },
-    exclude (...indices) {
-      this.backup()
-      for (let i of indices) {
-        this.currentPair[i].remove()
-      }
-      this.moveOn(false)
-    },
-    previous () {
-      this.restore()
-      this.questionCount -= 2
-      this.isPrevious = true
-      this.moveOn(true)
+      this.$emit('next', 'Result', { ranking })
     },
   },
 }
