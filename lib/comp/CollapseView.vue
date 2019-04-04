@@ -1,3 +1,18 @@
+<template>
+  <div class="collapse-view" :class="{ header: $slots.header, closed: isClosed }">
+    <div class="slot-header" @click="onClickHeader" v-if="$slots.header">
+      <slot name="header"/>
+    </div>
+    <collapse-transition
+      @before-enter="beforeEnter" @after-enter="afterEnter"
+      @before-leave="beforeLeave" @after-leave="afterLeave">
+      <div class="collpase-content" v-show="isOpen">
+        <slot/>
+      </div>
+    </collapse-transition>
+  </div>
+</template>
+
 <script>
 
 import CollapseTransition from '@theme-uzkk/transitions/Collapse'
@@ -60,21 +75,6 @@ export default {
 }
 
 </script>
-
-<template>
-  <div class="collapse-view" :class="{ header: $slots.header, closed: isClosed }">
-    <div class="slot-header" @click="onClickHeader" v-if="$slots.header">
-      <slot name="header"/>
-    </div>
-    <collapse-transition
-      @before-enter="beforeEnter" @after-enter="afterEnter"
-      @before-leave="beforeLeave" @after-leave="afterLeave">
-      <div class="collpase-content" v-show="isOpen">
-        <slot/>
-      </div>
-    </collapse-transition>
-  </div>
-</template>
 
 <style lang="stylus" scoped>
 

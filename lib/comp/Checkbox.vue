@@ -13,7 +13,7 @@
 
 <script>
 
-module.exports = {
+export default {
   props: {
     value: Boolean,
     label: String,

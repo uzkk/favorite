@@ -1,12 +1,13 @@
-export default class SortObject {
+export default class SortNode {
   public isEven: boolean = false
-  public parent: SortObject = null
-  public children: SortObject[] = []
+  public parent: SortNode = null
+  public children: SortNode[] = []
 
   constructor (
     public id: number,
     public name: string = '',
     public nick: string = '',
+    public appearence: string = '',
     public meta: Record<string, any> = {},
     public tags: string[] = [],
   ) {}
@@ -31,32 +32,30 @@ export default class SortObject {
   }
 
   /**
-  * 追加子结点
-  */
-  add (child: SortObject, doEvenAction = false) {
-    // 首先断开child父结点与child的连接 1R-（这个1R-是个啥？？）
+   * add child node
+   */
+  add (child: SortNode, doEvenAction = false) {
+    // remove node from its parent
     if (child.parent) {
       child.parent.children.splice(child.parent.children.indexOf(child), 1)
     }
 
-    // 特别处理平局情形
+    // handle even
     if (doEvenAction) {
-      // 把自己的子结点全部交出去 2A-, 3a+
       var copies = this.children.splice(0, this.children.length)
       for (var i = copies.length - 1; i >= 0; i--) {
         copies[i].parent = child
       }
-      Array.prototype.push.apply(child.children, copies)
+      child.children.push(...copies)
     }
 
-    // 2A+
     this.children.push(child)
     child.parent = this
   }
 
   /**
-  * 删除
-  */
+   * remove current node
+   */
   remove () {
     while (this.children.length > 0) {
       this.parent.add(this.children[0], false)
@@ -65,8 +64,8 @@ export default class SortObject {
   }
 
   /**
-  * 全体结点中搜索 resourceId 并返回 SortObject。没找到则返回 null。
-  */
+   * 全体结点中搜索 resourceId 并返回 SortObject。没找到则返回 null。
+   */
   findSortObjectById (resourceId) {
     if (this.id === resourceId) {
       return this

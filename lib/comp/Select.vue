@@ -8,8 +8,8 @@
     </h4>
     <table class="tac">
       <tr class="characters">
-        <td><Character :face="face" :node="pair[0]" @click="selectChar(0)"/></td>
-        <td><Character :face="face" :node="pair[1]" @click="selectChar(1)"/></td>
+        <td><Character :face="face" :node="currentPair[0]" @click="selectChar(0)"/></td>
+        <td><Character :face="face" :node="currentPair[1]" @click="selectChar(1)"/></td>
       </tr>
       <tr>
         <td>
@@ -65,12 +65,11 @@
 
 <script>
 
-import SortObject from '../utils/SortObject'
-import IDSortTree from '../utils/IDSortTree'
-import characters from '@dynamic/characters'
+import SortNode from '../utils/SortNode'
+import BackupTree from '../utils/BackupTree'
+import { characters } from '../data'
 import Character from './Character'
 import Button from './Button'
-import Vue from 'vue'
 
 export default {
   name: 'Select',
@@ -80,27 +79,24 @@ export default {
   props: ['gamelist', 'ranknum', 'face'],
 
   data: () => ({
-    pair: [],
-    bkpPair: [],
+    currentPair: [],
     questionCount: 1,
     currentRank: 0,
     isPrevious: false,
   }),
 
   created () {
-    this.rtNode = new SortObject('!root')
+    this.root = new SortNode(0)
     for (const char of characters) {
       for (const tag of char[3]) {
         if (this.gamelist.includes(tag)) {
-          this.rtNode.add(new SortObject(...char), false)
+          this.root.add(new SortNode(...char), false)
           break
         }
       }
     }
-    this.pair = this.ask(this.rtNode)
-    this.bkpRtNode = new IDSortTree()
-    this.bkpRtNode.setupCTree()
-    this.bkpRtNode.initTree(this.rtNode, this.bkpRtNode)
+    this.currentPair = this.ask(this.root)
+    this.backupTree = new BackupTree().setup(this.root)
   },
 
   methods: {
@@ -108,15 +104,14 @@ export default {
       this.$emit('next', 'Settings')
     },
     backup () {
-      this.bkpPair = [this.pair[0], this.pair[1]]
-      this.bkpRtNode.setupCTree()
-      this.bkpRtNode.initTree(this.rtNode, this.bkpRtNode)
+      this.backupPair = this.currentPair.slice()
+      this.backupTree.setup(this.root)
     },
     restore () {
-      this.pair = [this.bkpPair[0], this.bkpPair[1]]
-      this.bkpPair = null
+      this.currentPair = this.backupPair.slice()
+      this.backupPair = null
       this.currentRank = 0
-      this.rtNode = this.bkpRtNode.restoreCTree(this.bkpRtNode, null)
+      this.root = this.backupTree.restore()
     },
     ask (node, pair) {
       if (pair) {
@@ -146,11 +141,11 @@ export default {
     },
     nextPair (back) {
       if (back) {
-        this.pair = this.ask(this.rtNode, this.pair)
+        this.currentPair = this.ask(this.root, this.currentPair)
       } else {
-        this.pair = this.ask(this.rtNode)
+        this.currentPair = this.ask(this.root)
       }
-      if (this.pair && this.pair[1].level() <= this.ranknum) {
+      if (this.currentPair && this.currentPair[1].level() <= this.ranknum) {
         this.questionCount += 1
         return true
       }
@@ -160,7 +155,7 @@ export default {
       const { ranknum, face } = this
       if (!this.nextPair(back)) {
         let ranking = []
-        let node = this.rtNode
+        let node = this.root
         for (let i = 0; i < ranknum; i++) {
           node = node.children[0]
           if (!node) {
@@ -173,14 +168,14 @@ export default {
     },
     selectChar (index) {
       this.backup()
-      this.pair[index].add(this.pair[1 - index], false)
+      this.currentPair[index].add(this.currentPair[1 - index], false)
       this.isPrevious = false
       this.moveOn(false)
     },
     exclude (...indices) {
       this.backup()
       for (let i of indices) {
-        this.pair[i].remove()
+        this.currentPair[i].remove()
       }
       this.moveOn(false)
     },

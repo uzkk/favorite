@@ -23,7 +23,7 @@
 <script>
 
 import '../styles/icons.css'
-import { getCharImage } from './utils'
+import { getCharImage } from '../utils'
 
 export default {
   props: ['node', 'face'],
