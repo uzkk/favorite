@@ -26,3 +26,16 @@ export function getPreference (ranking: SortNode[], tagMap: Record<string, strin
     .filter(p => p.value > 0)
     .sort((a, b) => a.value - b.value > 0 ? -1 : 1)
 }
+
+export function group (length, groupLength, startIndex) {
+  const groups = new Array(Math.ceil(length / groupLength)).fill(undefined)
+  groups[groups.length - 1] = length % groupLength
+  return groups.map((_, index) => {
+    if (index < groups.length - 1) {
+      const start = groupLength * index + startIndex
+      return ['sm', start, groupLength + start]
+    }
+    const end = length + startIndex
+    return ['sm', end - (length % groupLength || groupLength), end]
+  })
+}
