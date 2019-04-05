@@ -37,6 +37,12 @@ export function getPreference (userRanking: string[], tagMap: Record<string, str
       return Math.tanh((popRank - userRank) / length) / (3 + Math.min(userRank, popRank))
     }))
 
+    console.log(name, relatedChars.map((name) => {
+      const userRank = getRank(name, userRanking)
+      const popRank = getRank(name, popRanking)
+      return Math.tanh((popRank - userRank) / length) / (3 + Math.min(userRank, popRank))
+    }))
+
     preference.push({ tag, name, value })
   }
 
