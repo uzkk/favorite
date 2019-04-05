@@ -79,10 +79,9 @@
 
 <script>
 
-import games from '../data/games'
+import { games, faces } from '../data'
 import Button from './Button'
 import Checkbox from './Checkbox'
-import { faces } from './utils'
 
 const ranks = [1, 5, 7, 10, 20]
 

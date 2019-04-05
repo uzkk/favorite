@@ -61,12 +61,11 @@
 
 <script>
 
-import ResultChar from './ResultChar'
 import Button from './Button'
-import tags from '../data/tags'
-import characters from '@dynamic/characters'
+import ResultChar from './ResultChar'
 import CollapseView from './CollapseView'
-import { getPreference } from './utils'
+import { getPreference } from '../utils'
+import { tags, characters } from '../data'
 
 function group (length, groupLength, startIndex) {
   const groups = new Array(Math.ceil(length / groupLength)).fill()
