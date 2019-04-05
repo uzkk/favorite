@@ -1,5 +1,5 @@
 // @ts-ignore
-import { ranks, charMap } from '../data'
+import { ranks, charMap, tags } from '../data'
 
 declare const TH_CHAR_PATH: string
 
@@ -16,15 +16,23 @@ function getRank (name: string, ranks: string[]) {
   return index === -1 ? ranks.length : index
 }
 
-export function getPreference (userRanking: string[], tagMap: Record<string, string>) {
+function hasIntersection (str1: string, str2: string) {
+  for (const char of str1) {
+    if (str2.includes(char)) return true
+  }
+  return false
+}
+
+export function getPreference (userRanking: string[], gamelist: string) {
   const { length } = userRanking
-  const popRanking = ranks.cn7.slice(0, length) as string[]
+  const popRanking = (ranks.cn7 as string[])
+    .filter(name => hasIntersection(charMap[name].appearence, gamelist))
+    .slice(0, length)
   const rankingChars = Array.from(new Set([...popRanking, ...userRanking]))
 
   const preference = []
-
-  for (const tag in tagMap) {
-    const name = tagMap[tag]
+  for (const tag in tags) {
+    const name = tags[tag]
 
     const relatedChars = rankingChars.filter((name) => {
       return charMap[name].tags.includes(tag)
@@ -34,13 +42,7 @@ export function getPreference (userRanking: string[], tagMap: Record<string, str
     const value = getAverage(relatedChars.map((name) => {
       const userRank = getRank(name, userRanking)
       const popRank = getRank(name, popRanking)
-      return Math.tanh((popRank - userRank) / length) / (3 + Math.min(userRank, popRank))
-    }))
-
-    console.log(name, relatedChars.map((name) => {
-      const userRank = getRank(name, userRanking)
-      const popRank = getRank(name, popRanking)
-      return Math.tanh((popRank - userRank) / length) / (3 + Math.min(userRank, popRank))
+      return Math.tanh((popRank - userRank) / length) / (2 + Math.min(userRank, popRank))
     }))
 
     preference.push({ tag, name, value })

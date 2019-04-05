@@ -64,7 +64,7 @@
 import Button from './Button'
 import ResultChar from './ResultChar'
 import CollapseView from './CollapseView'
-import { tags, charMap } from '../data'
+import { charMap } from '../data'
 import { getPreference, group } from '../utils'
 
 export default {
@@ -76,7 +76,7 @@ export default {
     Button,
   },
 
-  props: ['ranking', 'face'],
+  props: ['ranking', 'face', 'gamelist'],
 
   created () {
     this.charMap = charMap
@@ -101,7 +101,7 @@ export default {
     },
 
     preference () {
-      return getPreference(this.ranking, tags)
+      return getPreference(this.ranking, this.gamelist)
     },
   },
 
