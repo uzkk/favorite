@@ -7,8 +7,6 @@ export function getCharImage (id: number, face: string) {
   return `${TH_CHAR_PATH}/${face}/c${String(id).padStart(3, '0')}.png`
 }
 
-const COEF = (Math.E ** 2 + 1) / (Math.E ** 2 - 1)
-
 function getAverage (list: number[]) {
   return list.reduce((sum, item) => sum + item, 0) / list.length
 }
@@ -36,8 +34,8 @@ export function getPreference (userRanking: string[], tagMap: Record<string, str
     const value = getAverage(relatedChars.map((name) => {
       const userRank = getRank(name, userRanking)
       const popRank = getRank(name, popRanking)
-      return Math.tanh((popRank - userRank) / length)
-    })) * COEF
+      return Math.tanh((popRank - userRank) / length) / (3 + Math.min(userRank, popRank))
+    }))
 
     preference.push({ tag, name, value })
   }
