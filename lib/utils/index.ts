@@ -43,7 +43,7 @@ export function getPreference (userRanking: string[], gamelist: string) {
       const userRank = getRank(name, userRanking)
       const popRank = getRank(name, popRanking)
       return Math.tanh((popRank - userRank) / length) / (2 + Math.min(userRank, popRank))
-    }))
+    })) * 4
 
     preference.push({ tag, name, value })
   }
