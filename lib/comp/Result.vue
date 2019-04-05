@@ -65,7 +65,23 @@ import Button from './Button'
 import ResultChar from './ResultChar'
 import CollapseView from './CollapseView'
 import { tags, characters } from '../data'
+<<<<<<< HEAD
+
+function group (length, groupLength, startIndex) {
+  const groups = new Array(Math.ceil(length / groupLength)).fill()
+  groups[groups.length - 1] = length % groupLength
+  return groups.map((_, index) => {
+    if (index < groups.length - 1) {
+      const start = groupLength * index + startIndex
+      return ['sm', start, groupLength + start]
+    }
+    const end = length + startIndex
+    return ['sm', end - (length % groupLength || groupLength), end]
+  })
+}
+=======
 import { getPreference, group } from '../utils'
+>>>>>>> 8fe47d01b1fb79b5286d7704300f40ea48fafe98
 
 export default {
   name: 'Result',
