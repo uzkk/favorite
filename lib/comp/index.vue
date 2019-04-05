@@ -6,11 +6,6 @@
     <FadeSlideTransition>
       <component :is="phase" :key="phase" @next="updatePhase" v-bind="state"/>
     </FadeSlideTransition>
-    <footer>
-      <p>
-        <router-link to="/favorite/about.html">关于本命角色测试</router-link>
-      </p>
-    </footer>
   </div>
 </template>
 

@@ -73,6 +73,12 @@
       >
         开始
       </Button>
+      <Button
+        class="start-btn"
+        @click="$router.push('/favorite/about.html')"
+      >
+        关于本命测试
+      </Button>
     </div>
   </div>
 </template>
@@ -215,11 +221,12 @@ li.game-item
   width 4em
 
 .start-btn-container
-  margin 2em auto
+  margin 1.8em auto
   width 30%
 
 .start-btn
   width 100%
   display block
+  margin 0.8em 0
 
 </style>

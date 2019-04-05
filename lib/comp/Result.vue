@@ -55,6 +55,13 @@
       >
         返回主界面
       </Button>
+      <Button
+        class="res-page-back-btn"
+        title="返回主界面"
+        @click="$router.push('/favorite/about.html')"
+      >
+        关于本命测试
+      </Button>
     </div>
   </div>
 </template>
@@ -124,11 +131,12 @@ export default {
 
 .back-btn-container
   width 30%
-  margin 1.7em auto
+  margin 1.8em auto
 
 .res-page-back-btn
   width 100%
   display block
+  margin 0.8em 0
 
 .container
   margin 1em auto
