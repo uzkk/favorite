@@ -32,14 +32,17 @@
     </collapse-view>
     <collapse-view initial="open" class="preference container">
       <h3 slot="header">偏好分数 (开发中)</h3>
-      <table>
+      <p v-if="ranking.length < 7 || !preference.length">
+        排名数量过少，不予统计。
+      </p>
+      <table v-else>
         <tr>
           <th>属性名</th>
           <th>参考值</th>
         </tr>
-        <tr v-for="({ name, value }, tag) in preference" :key="tag">
+        <tr v-for="({ name, value, index }) in preference" :key="index">
           <td>{{ name }}</td>
-          <td>{{ value ? value : '--' }}</td>
+          <td>{{ value.toFixed(3) }}</td>
         </tr>
       </table>
     </collapse-view>
@@ -62,6 +65,7 @@ import Button from './Button'
 import ResultChar from './ResultChar'
 import CollapseView from './CollapseView'
 import { tags, characters } from '../data'
+<<<<<<< HEAD
 
 function group (length, groupLength, startIndex) {
   const groups = new Array(Math.ceil(length / groupLength)).fill()
@@ -75,6 +79,9 @@ function group (length, groupLength, startIndex) {
     return ['sm', end - (length % groupLength || groupLength), end]
   })
 }
+=======
+import { getPreference, group } from '../utils'
+>>>>>>> 8fe47d01b1fb79b5286d7704300f40ea48fafe98
 
 export default {
   name: 'Result',
@@ -87,15 +94,17 @@ export default {
 
   props: ['ranking', 'face'],
 
-  data: () => ({
-    preference: {},
-  }),
+  data: () => ({}),
 
   computed: {
     rankingGroups () {
       switch (this.ranking.length) {
         case 1: return [['lg', 0, 1]]
+        case 2: return [['lg', 0, 2]]
+        case 3: return [['lg', 0, 1], ['md', 1, 3]]
+        case 4: return [['lg', 0, 1], ['md', 1, 4]]
         case 5: return [['lg', 0, 2], ['md', 2, 5]]
+        case 6: return [['lg', 0, 1], ['lg', 1, 3], ['md', 3, 6]]
         case 7: return [['lg', 0, 2], ['lg', 2, 4], ['md', 4, 7]]
         default: return [
           ['lg', 0, 2],
@@ -104,23 +113,10 @@ export default {
         ]
       }
     },
-  },
 
-  created () {
-    const weightnum = Math.min(10, this.ranking.length)
-    const chars = this.ranking.slice(0, weightnum)
-    const weights = chars.map((char, index) => {
-      return 1 / ((index + 4) * (1 + 1.1 ** (index + 1 - char.meta.rank_cn7)))
-    })
-
-    for (const tag in tags) {
-      this.preference[tag] = {
-        name: tags[tag],
-        value: weights.filter((w, index) => {
-          return chars[index].tags.includes(tag)
-        }).reduce((sum, w) => sum + w, 0),
-      }
-    }
+    preference () {
+      return getPreference(this.ranking, tags)
+    },
   },
 
   methods: {
