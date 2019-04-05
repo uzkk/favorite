@@ -11,7 +11,7 @@
 
 <script>
 
-import { getCharImage } from './utils'
+import { getCharImage } from '../utils'
 
 export default {
   props: ['node', 'face', 'size', 'rank'],

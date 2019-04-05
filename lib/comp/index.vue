@@ -19,8 +19,8 @@
 import Result from './Result'
 import Select from './Select'
 import Settings from './Settings'
-import { getCharImage, faces } from './utils'
-import characters from '@dynamic/characters'
+import { getCharImage } from '../utils'
+import { characters, faces } from '../data'
 import FadeSlideTransition from '@theme-uzkk/transitions/FadeSlide'
 
 export default {
