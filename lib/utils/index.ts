@@ -1,3 +1,5 @@
+// @ts-ignore
+import { ranks } from '../data'
 import SortNode from './SortNode'
 
 declare const TH_CHAR_PATH: string
@@ -24,13 +26,13 @@ export function getPreference (ranking: SortNode[], tagMap: Record<string, strin
 
   return preference
     .filter(p => p.value > 0)
-    .sort((a, b) => a.value - b.value > 0 ? -1 : 1)
+    .sort((a, b) => a.value > b.value ? -1 : 1)
 }
 
-export function group (length, groupLength, startIndex) {
+export function group (length: number, groupLength: number, startIndex: number) {
   const groups = new Array(Math.ceil(length / groupLength)).fill(undefined)
   groups[groups.length - 1] = length % groupLength
-  return groups.map((_, index) => {
+  return groups.map((_, index): [string, number, number] => {
     if (index < groups.length - 1) {
       const start = groupLength * index + startIndex
       return ['sm', start, groupLength + start]
