@@ -31,7 +31,7 @@
       </table>
     </collapse-view>
     <collapse-view initial="open" class="preference container">
-      <h3 slot="header">偏好分数 (开发中)</h3>
+      <h3 slot="header">偏好分数</h3>
       <p v-if="ranking.length < 7 || !preference.length">
         排名数量过少，不予统计。
       </p>
