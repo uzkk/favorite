@@ -1,6 +1,5 @@
 // @ts-ignore
-import { ranks } from '../data'
-import SortNode from './SortNode'
+import { ranks, charMap } from '../data'
 
 declare const TH_CHAR_PATH: string
 
@@ -8,25 +7,42 @@ export function getCharImage (id: number, face: string) {
   return `${TH_CHAR_PATH}/${face}/c${String(id).padStart(3, '0')}.png`
 }
 
-export function getPreference (ranking: SortNode[], tagMap: Record<string, string>) {
+const COEF = (Math.E ** 2 + 1) / (Math.E ** 2 - 1)
+
+function getAverage (list: number[]) {
+  return list.reduce((sum, item) => sum + item, 0) / list.length
+}
+
+function getRank (name: string, ranks: string[]) {
+  const index = ranks.indexOf(name)
+  return index === -1 ? ranks.length : index
+}
+
+export function getPreference (userRanking: string[], tagMap: Record<string, string>) {
+  const { length } = userRanking
+  const popRanking = ranks.cn7.slice(0, length) as string[]
+  const rankingChars = Array.from(new Set([...popRanking, ...userRanking]))
+
   const preference = []
-  const weights = ranking.map((char, index) => {
-    return 1 / ((index + 4) * (1 + 1.1 ** (index + 1 - char.meta.rank_cn7)))
-  })
 
   for (const tag in tagMap) {
-    preference.push({
-      tag,
-      name: tagMap[tag],
-      value: weights.filter((w, index) => {
-        return ranking[index].tags.includes(tag)
-      }).reduce((sum, w) => sum + w, 0),
+    const name = tagMap[tag]
+
+    const relatedChars = rankingChars.filter((name) => {
+      return charMap[name].tags.includes(tag)
     })
+    if (!relatedChars.length) continue
+
+    const value = getAverage(relatedChars.map((name) => {
+      const userRank = getRank(name, userRanking)
+      const popRank = getRank(name, popRanking)
+      return Math.tanh((popRank - userRank) / length)
+    })) * COEF
+
+    preference.push({ tag, name, value })
   }
 
-  return preference
-    .filter(p => p.value > 0)
-    .sort((a, b) => a.value > b.value ? -1 : 1)
+  return preference.sort((a, b) => a.value > b.value ? -1 : 1)
 }
 
 export function group (length: number, groupLength: number, startIndex: number) {

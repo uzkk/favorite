@@ -7,10 +7,10 @@
       :key="start"
     >
       <ResultChar
-        v-for="(char, index) in ranking.slice(start, end)"
+        v-for="(name, index) in ranking.slice(start, end)"
         :key="index"
         :rank="index + start + 1"
-        :node="char"
+        :node="charMap[name]"
         :face="face"
         :size="size"
       />
@@ -23,10 +23,10 @@
           <th>姓名</th>
           <th>称号</th>
         </tr>
-        <tr v-for="({ name, nick }, index) in ranking" :key="index">
+        <tr v-for="(name, index) in ranking" :key="index">
           <td>{{ index + 1 }}</td>
           <td>{{ name }}</td>
-          <td>{{ nick }}</td>
+          <td>{{ charMap[name].nick }}</td>
         </tr>
       </table>
     </collapse-view>
@@ -64,24 +64,8 @@
 import Button from './Button'
 import ResultChar from './ResultChar'
 import CollapseView from './CollapseView'
-import { tags, characters } from '../data'
-<<<<<<< HEAD
-
-function group (length, groupLength, startIndex) {
-  const groups = new Array(Math.ceil(length / groupLength)).fill()
-  groups[groups.length - 1] = length % groupLength
-  return groups.map((_, index) => {
-    if (index < groups.length - 1) {
-      const start = groupLength * index + startIndex
-      return ['sm', start, groupLength + start]
-    }
-    const end = length + startIndex
-    return ['sm', end - (length % groupLength || groupLength), end]
-  })
-}
-=======
+import { tags, charMap } from '../data'
 import { getPreference, group } from '../utils'
->>>>>>> 8fe47d01b1fb79b5286d7704300f40ea48fafe98
 
 export default {
   name: 'Result',
@@ -94,7 +78,9 @@ export default {
 
   props: ['ranking', 'face'],
 
-  data: () => ({}),
+  created () {
+    this.charMap = charMap
+  },
 
   computed: {
     rankingGroups () {
