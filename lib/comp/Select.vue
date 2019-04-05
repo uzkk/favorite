@@ -106,7 +106,7 @@ export default {
       for (let i = 0; i < this.ranknum; i++) {
         node = node.children[0]
         if (!node) break
-        ranking.push(node)
+        ranking.push(node.name)
       }
       this.$emit('next', 'Result', { ranking })
     },

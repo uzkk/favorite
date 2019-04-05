@@ -50,12 +50,6 @@ export default {
     this.isClosed = !this.isOpen
   },
 
-  watch: {
-    isOpen (val) {
-      console.log(val)
-    },
-  },
-
   methods: {
     beforeEnter () {
       this.$emit('before-update')
@@ -96,6 +90,9 @@ export default {
   > .collpase-content
     position relative
     transition 0.3s ease
+
+    > :last-child
+      margin-bottom 0
 
   &.closed:not(.header)
     border-bottom none
