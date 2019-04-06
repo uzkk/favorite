@@ -1,11 +1,12 @@
 {
   "name": "@uzkk/favorite",
-  "version": "1.0.1",
+  "version": "1.2.1",
   "main": "lib/index.js",
   "author": "Shigma <1700011071@pku.edu.cn>",
   "license": "MIT",
   "files": [
-    "lib"
+    "lib",
+    "tsconfig.json"
   ],
   "repository": {
     "type": "git",

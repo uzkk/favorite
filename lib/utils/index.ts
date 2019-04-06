@@ -48,7 +48,9 @@ export function getPreference (userRanking: string[], gamelist: string) {
     preference.push({ tag, name, value })
   }
 
-  return preference.sort((a, b) => a.value > b.value ? -1 : 1)
+  return preference
+    .filter(p => p.value > 0)
+    .sort((a, b) => a.value > b.value ? -1 : 1)
 }
 
 export function group (length: number, groupLength: number, startIndex: number) {
