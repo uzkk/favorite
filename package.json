@@ -1,6 +1,6 @@
 {
   "name": "@uzkk/favorite",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "lib/index.js",
   "author": "Shigma <1700011071@pku.edu.cn>",
   "license": "MIT",
