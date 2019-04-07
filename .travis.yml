@@ -18,6 +18,5 @@ deploy:
   github-token: $GITHUB_TOKEN
   local-dir: docs/.vuepress/dist
   skip-cleanup: true
-  target-branch: master
   on:
-    branch: docs
+    branch: master
