@@ -23,7 +23,7 @@
     "lint": "eslint . --fix"
   },
   "devDependencies": {
-    "@uzkk/shared-assets": "^0.0.2",
+    "@uzkk/shared-assets": "^0.0.3",
     "eslint": "^5.15.1",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
@@ -35,7 +35,7 @@
     "vuepress-theme-uzkk": "^1.0.0-alpha.10"
   },
   "dependencies": {
-    "@uzkk/favorite-assets": "^0.0.4",
+    "@uzkk/favorite-assets": "^0.0.6",
     "js-yaml-loader": "^1.0.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.4.1"
