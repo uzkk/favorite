@@ -75,7 +75,7 @@
       </Button>
       <Button
         class="start-btn"
-        @click="$router.push('/favorite/about.html')"
+        @click="$router.push(UZKK_FAVORITE_BASE + 'about.html')"
       >
         关于本命测试
       </Button>

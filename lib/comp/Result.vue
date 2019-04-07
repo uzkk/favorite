@@ -58,7 +58,7 @@
       <Button
         class="res-page-back-btn"
         title="返回主界面"
-        @click="$router.push('/favorite/about.html')"
+        @click="$router.push(UZKK_FAVORITE_BASE + 'about.html')"
       >
         关于本命测试
       </Button>
