@@ -68,9 +68,9 @@
 
 <script>
 
-import Button from './Button'
+import Button from '@theme-uzkk/components/Button'
+import CollapseView from '@theme-uzkk/components/CollapseView'
 import ResultChar from './ResultChar'
-import CollapseView from './CollapseView'
 import { charMap } from '../data'
 import { getPreference, group } from '../utils'
 

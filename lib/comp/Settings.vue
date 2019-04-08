@@ -85,9 +85,9 @@
 
 <script>
 
+import Button from '@theme-uzkk/components/Button'
+import Checkbox from '@theme-uzkk/components/Checkbox'
 import { games, faces } from '../data'
-import Button from './Button'
-import Checkbox from './Checkbox'
 
 const ranks = [1, 5, 7, 10, 20]
 

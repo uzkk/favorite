@@ -65,11 +65,11 @@
 
 <script>
 
+import Button from '@theme-uzkk/components/Button'
 import SortNode from '../utils/SortNode'
 import sort from '../utils/sort.mixin'
 import { characters } from '../data'
 import Character from './Character'
-import Button from './Button'
 
 export default {
   name: 'Select',
