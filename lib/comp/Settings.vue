@@ -2,12 +2,12 @@
   <div>
     <div class="option-container">
       <p class="title">
-        <Checkbox v-model="allSelected" label="所有作品全选"/>
+        <Checkbox v-model="allSelected" label="所有作品"/>
       </p>
       <ul>
         <li>
           <p>
-            <Checkbox v-model="allStgSelected" label="正作 STG 全选"/>
+            <Checkbox v-model="allStgSelected" label="正作"/>
           </p>
           <ul>
             <li class="game-item" v-for="(game, index) in games.integer" :key="index">
@@ -21,7 +21,7 @@
         </li>
         <li>
           <p>
-            <Checkbox v-model="otherSelected" label="外传作品全选"/>
+            <Checkbox v-model="otherSelected" label="外传"/>
           </p>
           <ul>
             <li class="game-item" v-for="(game, index) in games.others" :key="index">
@@ -35,7 +35,7 @@
         </li>
         <li>
           <p>
-            <Checkbox v-model="oldSelected" label="旧作全选"/>
+            <Checkbox v-model="oldSelected" label="旧作"/>
           </p>
           <ul>
             <li class="game-item" v-for="(game, index) in games.old" :key="index">

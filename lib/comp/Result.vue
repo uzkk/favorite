@@ -75,8 +75,6 @@ import { charMap } from '../data'
 import { getPreference, group } from '../utils'
 
 export default {
-  name: 'Result',
-
   components: {
     CollapseView,
     ResultChar,

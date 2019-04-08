@@ -1,8 +1,5 @@
 <template>
   <div class="favorite">
-    <header>
-      <h1>本命角色测试</h1>
-    </header>
     <FadeSlideTransition>
       <component :is="phase" :key="phase" @next="updatePhase" v-bind="state"/>
     </FadeSlideTransition>
@@ -19,8 +16,6 @@ import { characters, faces } from '../data'
 import FadeSlideTransition from '@theme-uzkk/transitions/FadeSlide'
 
 export default {
-  name: 'Favorite',
-
   components: {
     Result,
     Select,
@@ -52,13 +47,3 @@ export default {
 }
 
 </script>
-
-<style lang="stylus" scoped>
-
-header
-  text-align center
-
-  h1
-    margin 3rem 0
-
-</style>

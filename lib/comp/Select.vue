@@ -72,8 +72,6 @@ import { characters } from '../data'
 import Character from './Character'
 
 export default {
-  name: 'Select',
-
   components: { Character, Button },
 
   mixins: [sort],
