@@ -8,6 +8,7 @@ module.exports = (context) => ({
   theme: 'uzkk',
 
   plugins: [
+    [require('@uzkk/not-found')],
     [require('@uzkk/shared-assets')],
     [require('../..'), {
       base: '/',
