@@ -1,0 +1,22 @@
+language: node_js
+
+git:
+  depth: false
+
+branches:
+  only:
+    - master
+
+node_js:
+  - node
+
+before_deploy:
+  - yarn build
+
+deploy:
+  provider: pages
+  github-token: $GITHUB_TOKEN
+  local-dir: docs/.vuepress/dist
+  skip-cleanup: true
+  on:
+    branch: master
