@@ -49,6 +49,24 @@
         </td>
       </tr>
       <tr>
+        <td>
+          <Button
+            title="本题随机作答"
+            @click="randomPick"
+          >
+            随便替我选个叭
+          </Button>
+        </td>
+        <td>
+          <Button
+            title="本题及接下来的所有题随机作答"
+            @click="randomPickForAll"
+          >
+            累了，之后都随便选叭
+          </Button>
+        </td>
+      </tr>
+      <tr>
         <td colspan="2">
           <Button
             title="返回主界面"
