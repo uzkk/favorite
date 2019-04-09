@@ -68,7 +68,7 @@ export function group (length: number, groupLength: number, startIndex: number) 
   })
 }
 
-export function group5 (length: number) {
+export function group5 (length: number): [string, number, number][] {
   switch (length) {
     case 1: return [['lg', 0, 1]]
     case 2: return [['lg', 0, 2]]

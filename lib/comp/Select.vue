@@ -96,14 +96,14 @@ export default {
 
   created () {
     const { query } = this.$route
-    const range = query.range || 'abcdefghijkABDE'
+    this.range = query.range || 'abcdefghijkABDE'
     this.max = query.max || 1
     this.face = query.face || 'default'
 
     this.root = new SortNode(0)
     for (const char of characters) {
       for (const tag of char[3]) {
-        if (range.includes(tag)) {
+        if (this.range.includes(tag)) {
           this.root.add(new SortNode(...char), false)
           break
         }
