@@ -55,7 +55,7 @@ export default {
       } else {
         this.currentPair = this.ask(this.root)
       }
-      if (this.currentPair && this.currentPair[1].level() <= this.ranknum) {
+      if (this.currentPair && this.currentPair[1].level() <= this.max) {
         this.questionCount += 1
         return true
       }
@@ -91,7 +91,7 @@ export default {
       let index = Math.floor(Math.random() * 2)
       this.currentPair[index].add(this.currentPair[1 - index], false)
       let pair = this.ask(this.root)
-      while (pair && pair[1].level() <= this.ranknum) {
+      while (pair && pair[1].level() <= this.max) {
         index = Math.floor(Math.random() * 2)
         pair[index].add(pair[1 - index], false)
         pair = this.ask(this.root)

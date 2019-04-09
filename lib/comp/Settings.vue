@@ -12,7 +12,7 @@
           <ul>
             <li class="inline medium" v-for="(game, index) in games.integer" :key="index">
               <Checkbox
-                :value="gamelist.includes(game.tag)"
+                :value="range.includes(game.tag)"
                 :label="game.name"
                 @update="toggleGame(game.tag)"
               />
@@ -26,7 +26,7 @@
           <ul>
             <li class="inline medium" v-for="(game, index) in games.others" :key="index">
               <Checkbox
-                :value="gamelist.includes(game.tag)"
+                :value="range.includes(game.tag)"
                 :label="game.name"
                 @update="toggleGame(game.tag)"
               />
@@ -40,7 +40,7 @@
           <ul>
             <li class="inline medium" v-for="(game, index) in games.old" :key="index">
               <Checkbox
-                :value="gamelist.includes(game.tag)"
+                :value="range.includes(game.tag)"
                 :label="game.name"
                 @update="toggleGame(game.tag)"
               />
@@ -54,7 +54,7 @@
         <span style="margin-right: 1em">选择排名数：</span>
         <ul class="inline">
           <li class="inline short" v-for="(num, index) in ranks" :key="index">
-            <Radio :label="num" v-model="ranknum"/>
+            <Radio :label="num" v-model="max"/>
           </li>
         </ul>
       </p>
@@ -69,8 +69,8 @@
     </div>
     <div class="button-container tac">
       <Button
-        @click="$emit('next', 'Select', { gamelist, ranknum, face })"
-        :disabled="!gamelist.length"
+        @click="$router.push({ query: { range, max, face } })"
+        :disabled="!range.length"
       >
         开始
       </Button>
@@ -97,9 +97,9 @@ export default {
   components: { Button, Checkbox, Radio },
 
   data: () => ({
-    ranknum: 1,
+    max: 1,
     face: 'default',
-    gamelist: 'abcdefghijk',
+    range: 'abcdefghijk',
   }),
 
   created () {
@@ -115,67 +115,67 @@ export default {
   computed: {
     allSelected: {
       get () {
-        return this.gamelist.length === this.all.length
+        return this.range.length === this.all.length
       },
       set (value) {
-        this.gamelist = value ? this.all : ''
+        this.range = value ? this.all : ''
       },
     },
     allStgSelected: {
       get () {
         for (let game of this.stg) {
-          if (!this.gamelist.includes(game)) {
+          if (!this.range.includes(game)) {
             return false
           }
         }
         return true
       },
       set (value) {
-        const noSTG = this.gamelist.match(/^[A-Z]*/)[0]
-        this.gamelist = noSTG + (value ? this.stg : '')
+        const noSTG = this.range.match(/^[A-Z]*/)[0]
+        this.range = noSTG + (value ? this.stg : '')
       },
     },
     otherSelected: {
       get () {
         for (let game of this.other) {
-          if (!this.gamelist.includes(game)) {
+          if (!this.range.includes(game)) {
             return false
           }
         }
         return true
       },
       set (value) {
-        const STG = this.gamelist.match(/[F-Za-z]*$/)[0]
-        this.gamelist = (value ? this.other : '') + STG
+        const STG = this.range.match(/[F-Za-z]*$/)[0]
+        this.range = (value ? this.other : '') + STG
       },
     },
     oldSelected: {
       get () {
         for (let game of this.old) {
-          if (!this.gamelist.includes(game)) {
+          if (!this.range.includes(game)) {
             return false
           }
         }
         return true
       },
       set (value) {
-        const STG = this.gamelist.match(/[a-z]*$/)[0]
-        const other = this.gamelist.match(/^[A-E]*/)[0]
-        this.gamelist = other + (value ? this.old : '') + STG
+        const STG = this.range.match(/[a-z]*$/)[0]
+        const other = this.range.match(/^[A-E]*/)[0]
+        this.range = other + (value ? this.old : '') + STG
       },
     },
   },
 
   methods: {
     toggleGame (tag) {
-      const index = this.gamelist.indexOf(tag)
-      const chars = this.gamelist.split('')
+      const index = this.range.indexOf(tag)
+      const chars = this.range.split('')
       if (index > -1) {
         chars.splice(index, 1)
-        this.gamelist = chars.join('')
+        this.range = chars.join('')
       } else {
         chars.push(tag)
-        this.gamelist = chars.sort().join('')
+        this.range = chars.sort().join('')
       }
     },
   },

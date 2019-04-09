@@ -71,7 +71,7 @@
           <Button
             title="返回主界面"
             type="warning"
-            @click="backToSettings"
+            @click="$router.push({})"
           >
             返回主界面
           </Button>
@@ -94,13 +94,16 @@ export default {
 
   mixins: [sort],
 
-  props: ['gamelist', 'ranknum', 'face'],
-
   created () {
+    const { query } = this.$route
+    const range = query.range || 'abcdefghijkABDE'
+    this.max = query.max || 1
+    this.face = query.face || 'default'
+
     this.root = new SortNode(0)
     for (const char of characters) {
       for (const tag of char[3]) {
-        if (this.gamelist.includes(tag)) {
+        if (range.includes(tag)) {
           this.root.add(new SortNode(...char), false)
           break
         }
@@ -110,21 +113,21 @@ export default {
   },
 
   methods: {
-    backToSettings () {
-      this.$emit('next', 'Settings')
-    },
     moveOn (back) {
       if (this.getNextPair(back)) return
 
       // move to next part
-      const ranking = []
+      let ranking = ''
       let node = this.root
-      for (let i = 0; i < this.ranknum; i++) {
+      for (let i = 0; i < this.max; i++) {
         node = node.children[0]
         if (!node) break
-        ranking.push(node.name)
+        ranking += String.fromCharCode(node.id)
       }
-      this.$emit('next', 'Result', { ranking })
+
+      ranking = btoa(ranking)
+      const { range, face } = this
+      this.$router.push({ query: { ranking, range, face } })
     },
   },
 }

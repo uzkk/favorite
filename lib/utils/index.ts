@@ -1,5 +1,5 @@
 // @ts-ignore
-import { ranks, charMap, tags } from '../data'
+import { ranks, tags, charMap } from '../data'
 
 declare const TH_CHAR_PATH: string
 
@@ -7,12 +7,16 @@ export function getCharImage (id: number, face: string) {
   return `${TH_CHAR_PATH}/${face}/c${String(id).padStart(3, '0')}.png`
 }
 
+export function capitalize (str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+}
+
 function getAverage (list: number[]) {
   return list.reduce((sum, item) => sum + item, 0) / list.length
 }
 
-function getRank (name: string, ranks: string[]) {
-  const index = ranks.indexOf(name)
+function getRank (id: number, ranks: number[]) {
+  const index = ranks.indexOf(id)
   return index === -1 ? ranks.length : index
 }
 
@@ -23,10 +27,10 @@ function hasIntersection (str1: string, str2: string) {
   return false
 }
 
-export function getPreference (userRanking: string[], gamelist: string) {
+export function getPreference (userRanking: number[], range: string) {
   const { length } = userRanking
-  const popRanking = (ranks.cn7 as string[])
-    .filter(name => hasIntersection(charMap[name].appearence, gamelist))
+  const popRanking = (ranks.cn7 as number[])
+    .filter(id => hasIntersection(charMap[id].appearence, range))
     .slice(0, length)
   const rankingChars = Array.from(new Set([...popRanking, ...userRanking]))
 
@@ -34,9 +38,7 @@ export function getPreference (userRanking: string[], gamelist: string) {
   for (const tag in tags) {
     const name = tags[tag]
 
-    const relatedChars = rankingChars.filter((name) => {
-      return charMap[name].tags.includes(tag)
-    })
+    const relatedChars = rankingChars.filter(id => charMap[id].tags.includes(tag))
     if (!relatedChars.length) continue
 
     const value = getAverage(relatedChars.map((name) => {

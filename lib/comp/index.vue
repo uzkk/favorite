@@ -1,6 +1,6 @@
 <template>
   <FadeSlideTransition>
-    <component :is="phase" :key="phase" @next="updatePhase" v-bind="state"/>
+    <component :is="phase" :key="phase"/>
   </FadeSlideTransition>
 </template>
 
@@ -9,8 +9,8 @@
 import Result from './Result'
 import Select from './Select'
 import Settings from './Settings'
-import { getCharImage } from '../utils'
 import { characters, faces } from '../data'
+import { getCharImage, capitalize } from '../utils'
 import FadeSlideTransition from '@theme-uzkk/transitions/FadeSlide'
 
 export default {
@@ -21,10 +21,28 @@ export default {
     FadeSlideTransition,
   },
 
-  data: () => ({
-    phase: 'Settings',
-    state: {},
-  }),
+  computed: {
+    phase () {
+      const { query } = this.$route
+
+      // explicit phase
+      if (query.phase) {
+        const phase = capitalize(query.phase)
+        if (['Select', 'Settings'].includes(phase)) {
+          return phase
+        }
+      }
+
+      // default behavior
+      if (query.ranking) {
+        return 'Result'
+      } else if (query.range && query.face && query.max) {
+        return 'Select'
+      } else {
+        return 'Settings'
+      }
+    },
+  },
 
   mounted () {
     characters.forEach(([id]) => {
@@ -34,13 +52,6 @@ export default {
         link.href = getCharImage(id, face)
       }
     })
-  },
-
-  methods: {
-    updatePhase (nextPhase, state) {
-      Object.assign(this.state, state)
-      this.phase = nextPhase
-    },
   },
 }
 

@@ -7,10 +7,10 @@
       :key="start"
     >
       <ResultChar
-        v-for="(name, index) in ranking.slice(start, end)"
+        v-for="(id, index) in ranking.slice(start, end)"
         :key="index"
         :rank="index + start + 1"
-        :node="charMap[name]"
+        :node="charMap[id]"
         :face="face"
         :size="size"
       />
@@ -23,10 +23,10 @@
           <th>姓名</th>
           <th>称号</th>
         </tr>
-        <tr v-for="(name, index) in ranking" :key="index">
+        <tr v-for="(id, index) in ranking" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>{{ name }}</td>
-          <td>{{ charMap[name].nick }}</td>
+          <td>{{ charMap[id].name }}</td>
+          <td>{{ charMap[id].nick }}</td>
         </tr>
       </table>
     </collapse-view>
@@ -50,7 +50,7 @@
       <Button
         title="返回主界面"
         type="warning"
-        @click="backToSettings"
+        @click="$router.push({})"
       >
         返回主界面
       </Button>
@@ -79,9 +79,11 @@ export default {
     Button,
   },
 
-  props: ['ranking', 'face', 'gamelist'],
-
   created () {
+    const { query } = this.$route
+    this.range = query.range || 'abcdefghijkABDE'
+    this.face = query.face || 'default'
+    this.ranking = atob(query.ranking).split('').map(c => c.charCodeAt(0))
     this.charMap = charMap
   },
 
@@ -104,13 +106,7 @@ export default {
     },
 
     preference () {
-      return getPreference(this.ranking, this.gamelist)
-    },
-  },
-
-  methods: {
-    backToSettings () {
-      this.$emit('next', 'Settings')
+      return getPreference(this.ranking, this.range)
     },
   },
 }
