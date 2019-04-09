@@ -78,7 +78,7 @@ import Button from '@theme-uzkk/components/Button'
 import CollapseView from '@theme-uzkk/components/CollapseView'
 import ResultChar from './ResultChar'
 import { charMap } from '../data'
-import { getPreference, group } from '../utils'
+import { getPreference, group5 } from '../utils'
 
 export default {
   components: {
@@ -99,20 +99,7 @@ export default {
 
   computed: {
     rankingGroups () {
-      switch (this.ranking.length) {
-        case 1: return [['lg', 0, 1]]
-        case 2: return [['lg', 0, 2]]
-        case 3: return [['lg', 0, 1], ['md', 1, 3]]
-        case 4: return [['lg', 0, 1], ['md', 1, 4]]
-        case 5: return [['lg', 0, 2], ['md', 2, 5]]
-        case 6: return [['lg', 0, 1], ['lg', 1, 3], ['md', 3, 6]]
-        case 7: return [['lg', 0, 2], ['lg', 2, 4], ['md', 4, 7]]
-        default: return [
-          ['lg', 0, 2],
-          ['md', 2, 5],
-          ...group(this.ranking.length - 5, 5, 5),
-        ]
-      }
+      return group5(this.ranking.length)
     },
   },
 }
