@@ -83,5 +83,20 @@ export default {
       this.isPrevious = true
       this.moveOn(true)
     },
+    randomPick () {
+      let index = Math.floor(Math.random() * 2)
+      this.selectChar(index)
+    },
+    randomPickForAll () {
+      let index = Math.floor(Math.random() * 2)
+      this.currentPair[index].add(this.currentPair[1 - index], false)
+      let pair = this.ask(this.root)
+      while (pair && pair[1].level() <= this.ranknum) {
+        index = Math.floor(Math.random() * 2)
+        pair[index].add(pair[1 - index], false)
+        pair = this.ask(this.root)
+      }
+      this.moveOn(false)
+    },
   },
 }
