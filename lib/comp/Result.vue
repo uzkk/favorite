@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2 class="tac">您的前 {{ ranking.length }} 位本命角色排行</h2>
+
     <div
       v-for="[size, start, end] in rankingGroups"
       class="tac row"
@@ -15,7 +16,8 @@
         :size="size"
       />
     </div>
-    <collapse-view initial="open" class="result section-container">
+
+    <collapse-view initial="open" class="section-container">
       <h3 slot="header">投票结果</h3>
       <table>
         <tr>
@@ -30,7 +32,12 @@
         </tr>
       </table>
     </collapse-view>
-    <collapse-view initial="open" class="preference section-container">
+
+    <collapse-view
+      v-if="preference"
+      initial="open"
+      class="section-container"
+    >
       <h3 slot="header">偏好分数</h3>
       <p v-if="ranking.length < 7 || !preference.length">
         排名数量过少，不予统计。
@@ -46,6 +53,7 @@
         </tr>
       </table>
     </collapse-view>
+
     <div class="button-container tac">
       <Button
         title="返回主界面"
@@ -81,10 +89,12 @@ export default {
 
   created () {
     const { query } = this.$route
-    this.range = query.range || 'abcdefghijkABDE'
     this.face = query.face || 'default'
     this.ranking = atob(query.ranking).split('').map(c => c.charCodeAt(0))
     this.charMap = charMap
+    if (query.range) {
+      this.preference = getPreference(this.ranking, query.range)
+    }
   },
 
   computed: {
@@ -103,10 +113,6 @@ export default {
           ...group(this.ranking.length - 5, 5, 5),
         ]
       }
-    },
-
-    preference () {
-      return getPreference(this.ranking, this.range)
     },
   },
 }
