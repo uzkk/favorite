@@ -10,7 +10,7 @@
             <Checkbox v-model="allStgSelected" label="正作"/>
           </p>
           <ul>
-            <li class="game-item" v-for="(game, index) in games.integer" :key="index">
+            <li class="inline medium" v-for="(game, index) in games.integer" :key="index">
               <Checkbox
                 :value="gamelist.includes(game.tag)"
                 :label="game.name"
@@ -24,7 +24,7 @@
             <Checkbox v-model="otherSelected" label="外传"/>
           </p>
           <ul>
-            <li class="game-item" v-for="(game, index) in games.others" :key="index">
+            <li class="inline medium" v-for="(game, index) in games.others" :key="index">
               <Checkbox
                 :value="gamelist.includes(game.tag)"
                 :label="game.name"
@@ -38,7 +38,7 @@
             <Checkbox v-model="oldSelected" label="旧作"/>
           </p>
           <ul>
-            <li class="game-item" v-for="(game, index) in games.old" :key="index">
+            <li class="inline medium" v-for="(game, index) in games.old" :key="index">
               <Checkbox
                 :value="gamelist.includes(game.tag)"
                 :label="game.name"
@@ -50,20 +50,22 @@
       </ul>
     </div>
     <div class="section-container">
-      <div class="tac">
-        选择排名数：
-        <span class="choice-item opt-item" v-for="(num, index) in ranks" :key="index">
-          <input type="radio" :value="num" v-model="ranknum">
-          <label>{{ num }}</label>
-        </span>
-      </div>
-      <div class="tac">
-        选择立绘表情：
-        <span class="choice-item opt-item" v-for="(key, value) in faces" :key="value">
-          <input type="radio" :value="value" v-model="face">
-          <label>{{ key }}</label>
-        </span>
-      </div>
+      <p class="list">
+        <span style="margin-right: 1em">选择排名数：</span>
+        <ul class="inline">
+          <li class="inline short" v-for="(num, index) in ranks" :key="index">
+            <Radio :label="num" v-model="ranknum"/>
+          </li>
+        </ul>
+      </p>
+      <p class="list">
+        <span>选择立绘表情：</span>
+        <ul class="inline">
+          <li class="inline short" v-for="(key, value) in faces" :key="value">
+            <Radio :label="value" v-model="face">{{ key }}</Radio>
+          </li>
+        </ul>
+      </p>
     </div>
     <div class="button-container tac">
       <Button
@@ -84,6 +86,7 @@
 
 <script>
 
+import Radio from '@theme-uzkk/components/Radio'
 import Button from '@theme-uzkk/components/Button'
 import Checkbox from '@theme-uzkk/components/Checkbox'
 import { games, faces } from '../data'
@@ -91,7 +94,7 @@ import { games, faces } from '../data'
 const ranks = [1, 5, 7, 10, 20, 50, 100]
 
 export default {
-  components: { Button, Checkbox },
+  components: { Button, Checkbox, Radio },
 
   data: () => ({
     ranknum: 1,
@@ -181,23 +184,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
-p, ul
-  margin 0.6em 0
-
-p.title
-  font-weight bold
-
-ul
-  line-height 1.6
-  padding-inline-start 1.6em
-
-li
-  list-style-type none
-
-li.game-item
-  display inline-block
-  width 9em
 
 .opt-item
   display inline-block

@@ -4,3 +4,5 @@
 
 - 主站链接：[https://vp.uzkk.net/favorite/](https://vp.uzkk.net/favorite/)
 - 分站链接：[https://uzkk.github.io/favorite/](https://uzkk.github.io/favorite/)
+
+> 注：分站的更新会比主站快一两个版本。
