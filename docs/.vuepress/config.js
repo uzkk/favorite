@@ -8,6 +8,7 @@ module.exports = (context) => ({
   theme: 'uzkk',
 
   plugins: [
+    [require('@uzkk/not-found')],
     [require('@uzkk/shared-assets')],
     [require('../..'), {
       base: '/',
@@ -15,10 +16,7 @@ module.exports = (context) => ({
   ],
 
   themeConfig: {
-    lang: {
-      home: '东方 Project - 从入坑到入坟',
-      posts: 'My Posts',
-    },
+    search: false,
   },
 
   evergreen: () => !context.isProd,
