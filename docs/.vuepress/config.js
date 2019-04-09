@@ -17,6 +17,11 @@ module.exports = (context) => ({
 
   themeConfig: {
     search: false,
+    nav: [
+      { text: '主页', link: '/', exact: true },
+      { text: '关于', link: '/about.html', exact: false },
+      { text: 'GitHub', link: 'https://github.com/uzkk/favorite', exact: false },
+    ],
   },
 
   evergreen: () => !context.isProd,
