@@ -17,6 +17,43 @@
   > :last-child
     margin-bottom 0
 
+  p, ul
+    margin 0.6em 0
+    line-height 1.6
+
+  p.title
+    font-weight bold
+
+  p.list
+    margin 0
+
+    > :first-child
+      display inline-block
+      margin 0.6em 0
+
+    &:first-child > *
+      margin-top 0
+
+    &:last-child > *
+      margin-bottom 0
+
+    & + p.list
+      margin-top -0.6em
+
+  ul
+    padding-inline-start 1.6em
+    &.inline
+      display inline-block
+
+  li
+    list-style-type none
+    &.inline
+      display inline-block
+    &.medium
+      width 9em
+    &.short
+      width 5em
+
 .button-container
   margin 1.8em auto
   width 30%
