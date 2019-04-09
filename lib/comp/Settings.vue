@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="option-container">
+    <div class="section-container">
       <p class="title">
         <Checkbox v-model="allSelected" label="所有作品"/>
       </p>
@@ -49,7 +49,7 @@
         </li>
       </ul>
     </div>
-    <div class="option-container">
+    <div class="section-container">
       <div class="tac">
         选择排名数：
         <span class="choice-item opt-item" v-for="(num, index) in ranks" :key="index">
@@ -65,16 +65,15 @@
         </span>
       </div>
     </div>
-    <div class="start-btn-container tac">
+    <div class="button-container tac">
       <Button
-        class="start-btn"
         @click="$emit('next', 'Select', { gamelist, ranknum, face })"
         :disabled="!gamelist.length"
       >
         开始
       </Button>
       <Button
-        class="start-btn"
+        title="关于本命测试"
         @click="$router.push(UZKK_FAVORITE_BASE + 'about.html')"
       >
         关于本命测试
@@ -89,7 +88,7 @@ import Button from '@theme-uzkk/components/Button'
 import Checkbox from '@theme-uzkk/components/Checkbox'
 import { games, faces } from '../data'
 
-const ranks = [1, 5, 7, 10, 20]
+const ranks = [1, 5, 7, 10, 20, 50, 100]
 
 export default {
   components: { Button, Checkbox },
@@ -183,22 +182,6 @@ export default {
 
 <style lang="stylus" scoped>
 
-.tac
-  text-align center
-
-.option-container
-  margin 1em auto
-  padding 2em
-  border-radius .5em
-  background-color #fff
-  max-width 1080px
-
-  > :first-child
-    margin-top 0
-
-  > :last-child
-    margin-bottom 0
-
 p, ul
   margin 0.6em 0
 
@@ -219,14 +202,5 @@ li.game-item
 .opt-item
   display inline-block
   width 4em
-
-.start-btn-container
-  margin 1.8em auto
-  width 30%
-
-.start-btn
-  width 100%
-  display block
-  margin 0.8em 0
 
 </style>

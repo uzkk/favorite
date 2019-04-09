@@ -115,12 +115,6 @@ export default {
 
 <style lang="stylus" scoped>
 
-.tac
-  text-align center
-
-.emphasize
-  color #d00
-
 table
   margin-left auto
   margin-right auto

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="tac">您的前 {{ ranking.length }} 位本命角色排行：</h2>
+    <h2 class="tac">您的前 {{ ranking.length }} 位本命角色排行</h2>
     <div
       v-for="[size, start, end] in rankingGroups"
       class="tac row"
@@ -15,7 +15,7 @@
         :size="size"
       />
     </div>
-    <collapse-view initial="open" class="result container">
+    <collapse-view initial="open" class="result section-container">
       <h3 slot="header">投票结果</h3>
       <table>
         <tr>
@@ -30,7 +30,7 @@
         </tr>
       </table>
     </collapse-view>
-    <collapse-view initial="open" class="preference container">
+    <collapse-view initial="open" class="preference section-container">
       <h3 slot="header">偏好分数</h3>
       <p v-if="ranking.length < 7 || !preference.length">
         排名数量过少，不予统计。
@@ -46,9 +46,8 @@
         </tr>
       </table>
     </collapse-view>
-    <div class="back-btn-container tac">
+    <div class="button-container tac">
       <Button
-        class="res-page-back-btn"
         title="返回主界面"
         type="warning"
         @click="backToSettings"
@@ -56,8 +55,7 @@
         返回主界面
       </Button>
       <Button
-        class="res-page-back-btn"
-        title="返回主界面"
+        title="关于本命测试"
         @click="$router.push(UZKK_FAVORITE_BASE + 'about.html')"
       >
         关于本命测试
@@ -121,34 +119,10 @@ export default {
 
 <style lang="stylus" scoped>
 
-.tac
-  text-align center
-
 .row
   margin 1rem 0
 
-.back-btn-container
-  width 30%
-  margin 1.8em auto
-
-.res-page-back-btn
-  width 100%
-  display block
-  margin 0.8em 0
-
-.container
-  margin 1em auto
-  padding 2em
-  border-radius .5em
-  background-color #fff
-  max-width 1080px
-
-  > :first-child
-    margin-top 0
-
-  > :last-child
-    margin-bottom 0
-
+.section-container
   h3
     margin 0
 

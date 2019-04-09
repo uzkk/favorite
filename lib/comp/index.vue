@@ -1,9 +1,7 @@
 <template>
-  <div class="favorite">
-    <FadeSlideTransition>
-      <component :is="phase" :key="phase" @next="updatePhase" v-bind="state"/>
-    </FadeSlideTransition>
-  </div>
+  <FadeSlideTransition>
+    <component :is="phase" :key="phase" @next="updatePhase" v-bind="state"/>
+  </FadeSlideTransition>
 </template>
 
 <script>
@@ -47,3 +45,5 @@ export default {
 }
 
 </script>
+
+<style lang="stylus" src="../styles/index.styl"></style>
