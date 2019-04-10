@@ -35,16 +35,27 @@
       <p v-if="ranking.length < 7 || !preference.length">
         排名数量过少，不予统计。
       </p>
-      <table v-else>
-        <tr>
-          <th>属性名</th>
-          <th>参考值</th>
-        </tr>
-        <tr v-for="({ name, value, index }) in preference" :key="index">
-          <td>{{ name }}</td>
-          <td>{{ value.toFixed(3) }}</td>
-        </tr>
-      </table>
+      <div v-else>
+        <div v-if="highPref.length > 0" class="tac">
+          <p>幻想乡众贤者开会后一致认为，您极有可能属于下列人群：</p>
+          <p>
+            <span v-for="({ name, index }) in highPref" :key="index" class="high-pref">
+              {{ name }}控
+            </span>
+          </p>
+          <p>考虑到此类人群对幻想乡生物的危险性，贤者们已决定在您幻想入后将您调教成罪袋。请做好相应的觉悟。</p>
+        </div>
+        <table>
+          <tr>
+            <th>属性名</th>
+            <th>参考值</th>
+          </tr>
+          <tr v-for="({ name, value, index }) in preference" :key="index">
+            <td>{{ name }}</td>
+            <td>{{ value.toFixed(3) }}</td>
+          </tr>
+        </table>
+      </div>
     </collapse-view>
     <div class="button-container tac">
       <Button
@@ -106,6 +117,10 @@ export default {
     preference () {
       return getPreference(this.ranking, this.gamelist)
     },
+
+    highPref () {
+      return this.preference.filter(tag => tag.value >= 0.5)
+    }
   },
 
   methods: {
@@ -140,5 +155,10 @@ export default {
   th, td
     border 1px solid #dfe2e5
     padding .6em 1em
+
+.high-pref
+  font-weight bold
+  margin auto 0.5em
+  font-size 1.2em
 
 </style>
