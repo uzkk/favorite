@@ -38,9 +38,11 @@
       <div v-else>
         <div v-if="highPref.length > 0" class="tac">
           <p>幻想乡众贤者开会后一致认为，您极有可能属于下列人群：</p>
-          <span v-for="({ name, index }) in highPref" :key="index" class="high-pref">
-            {{ name }}控
-          </span>
+          <p>
+            <span v-for="({ name, index }) in highPref" :key="index" class="high-pref">
+              {{ name }}控
+            </span>
+          </p>
           <p>考虑到此类人群对幻想乡生物的危险性，贤者们已决定在您幻想入后将您调教成罪袋。请做好相应的觉悟。</p>
         </div>
         <table>
