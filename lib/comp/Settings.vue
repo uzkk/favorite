@@ -68,16 +68,13 @@
       </p>
     </div>
     <div class="button-container">
-      <Button
-        @click="$emit('next', 'Select', { gamelist, ranknum, face })"
-        :disabled="!gamelist.length"
-      >
+      <Button @click="nextPart" :disabled="!gamelist.length">
         开始
       </Button>
-      <Button
-        title="关于本命测试"
-        @click="$router.push(UZKK_FAVORITE_BASE + 'about.html')"
-      >
+      <Button @click="useFallback">
+        恢复默认设置
+      </Button>
+      <Button @click="toAboutPage">
         关于本命测试
       </Button>
     </div>
@@ -90,17 +87,14 @@ import Radio from '@theme-uzkk/components/Radio'
 import Button from '@theme-uzkk/components/Button'
 import Checkbox from '@theme-uzkk/components/Checkbox'
 import { games, faces } from '../data'
+import { getSettings, setSettings, useFallback } from '../utils/settings'
 
 const ranks = [1, 5, 7, 10, 20, 50, 100]
 
 export default {
   components: { Button, Checkbox, Radio },
 
-  data: () => ({
-    ranknum: 1,
-    face: 'default',
-    gamelist: 'abcdefghijkABDE',
-  }),
+  data: () => getSettings(),
 
   created () {
     this.faces = faces
@@ -177,6 +171,16 @@ export default {
         chars.push(tag)
         this.gamelist = chars.sort().join('')
       }
+    },
+    nextPart () {
+      this.$emit('next', 'Select', setSettings(this))
+    },
+    toAboutPage () {
+      setSettings(this)
+      this.$router.push(this.UZKK_FAVORITE_BASE + 'about.html')
+    },
+    useFallback () {
+      useFallback(this)
     },
   },
 }
