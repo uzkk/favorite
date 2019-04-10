@@ -99,7 +99,7 @@ export default {
   data: () => ({
     ranknum: 1,
     face: 'default',
-    gamelist: 'abcdefghijk',
+    gamelist: 'abcdefghijkABDE',
   }),
 
   created () {

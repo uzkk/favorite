@@ -65,3 +65,20 @@ export function group (length: number, groupLength: number, startIndex: number) 
     return ['sm', end - (length % groupLength || groupLength), end]
   })
 }
+
+export function group5 (length: number): [string, number, number][] {
+  switch (length) {
+    case 1: return [['lg', 0, 1]]
+    case 2: return [['lg', 0, 2]]
+    case 3: return [['lg', 0, 1], ['md', 1, 3]]
+    case 4: return [['lg', 0, 1], ['md', 1, 4]]
+    case 5: return [['lg', 0, 2], ['md', 2, 5]]
+    case 6: return [['lg', 0, 1], ['lg', 1, 3], ['md', 3, 6]]
+    case 7: return [['lg', 0, 2], ['lg', 2, 4], ['md', 4, 7]]
+    default: return [
+      ['lg', 0, 2],
+      ['md', 2, 5],
+      ...group(length - 5, 5, 5),
+    ]
+  }
+}
