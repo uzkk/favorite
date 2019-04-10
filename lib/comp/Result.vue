@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2 class="tac">您的前 {{ ranking.length }} 位本命角色排行</h2>
+
     <div
       v-for="[size, start, end] in rankingGroups"
       class="tac row"
@@ -15,7 +16,8 @@
         :size="size"
       />
     </div>
-    <collapse-view initial="open" class="result section-container">
+
+    <collapse-view initial="open" class="section">
       <h3 slot="header">投票结果</h3>
       <table>
         <tr>
@@ -30,10 +32,14 @@
         </tr>
       </table>
     </collapse-view>
-    <collapse-view initial="open" class="preference section-container">
+
+    <collapse-view initial="open" class="section">
       <h3 slot="header">偏好分数</h3>
-      <p v-if="ranking.length < 7 || !preference.length">
+      <p v-if="ranking.length < 7">
         排名数量过少，不予统计。
+      </p>
+      <p v-else-if="!preference.length">
+        未找到您可能的偏好标签。
       </p>
       <template v-else>
         <div v-if="highPref.length > 0" class="tac">
@@ -57,7 +63,8 @@
         </table>
       </template>
     </collapse-view>
-    <div class="button-container tac">
+
+    <div class="button-container">
       <Button
         title="返回主界面"
         type="warning"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="section-container">
+    <div class="section">
       <p class="title">
         <Checkbox v-model="allSelected" label="所有作品"/>
       </p>
@@ -49,7 +49,7 @@
         </li>
       </ul>
     </div>
-    <div class="section-container">
+    <div class="section">
       <p class="list">
         <span style="margin-right: 1em">选择排名数：</span>
         <ul class="inline">
@@ -67,7 +67,7 @@
         </ul>
       </p>
     </div>
-    <div class="button-container tac">
+    <div class="button-container">
       <Button
         @click="$emit('next', 'Select', { gamelist, ranknum, face })"
         :disabled="!gamelist.length"
@@ -182,11 +182,3 @@ export default {
 }
 
 </script>
-
-<style lang="stylus" scoped>
-
-.opt-item
-  display inline-block
-  width 4em
-
-</style>

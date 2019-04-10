@@ -7,7 +7,7 @@ h3
 .emphasize
   color #d00
 
-.section-container
+.section
   margin 1em auto
   padding 2em
   border-radius .5em
@@ -29,17 +29,13 @@ h3
 
   p.list
     margin 0
-
     > :first-child
       display inline-block
       margin 0.6em 0
-
     &:first-child > *
       margin-top 0
-
     &:last-child > *
       margin-bottom 0
-
     & + p.list
       margin-top -0.6em
 
@@ -57,11 +53,11 @@ h3
     &.short
       width 5em
 
-  .slot-header h3
-    margin 0
-
-  .collpase-content > :first-child
-    margin-top 1em
+  &.collapse-view
+    .collapse-header h3
+      margin 0
+    .collapse-content > :first-child
+      margin-top 1em
   
   table
     max-width 100%
@@ -83,6 +79,7 @@ h3
   width 30%
   max-width 20em
   min-width 14em
+  text-align center
 
   button
     width 100%
