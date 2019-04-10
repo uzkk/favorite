@@ -158,6 +158,6 @@ export default {
   font-weight bold
   display inline
   margin auto 0.5em
-
+  font-size 1.2em
 
 </style>
