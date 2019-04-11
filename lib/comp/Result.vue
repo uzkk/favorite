@@ -126,7 +126,7 @@ export default {
   margin 1rem 0
 
 .result
-  @media (max-width 599px)
+  @media (max-width 568px)
     th.nick, td.nick
       display none
 
