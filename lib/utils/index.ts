@@ -7,8 +7,9 @@ export function getCharImage (id: number, face: string) {
   return `${TH_CHAR_PATH}/${face}/c${String(id).padStart(3, '0')}.png`
 }
 
-function getAverage (list: number[]) {
-  return list.reduce((sum, item) => sum + item, 0) / list.length
+function getAverage (list: [number, number][]) {
+  const [vSum, wSum] = list.reduce(([vSum, wSum], [v, w]) => [vSum + v * w, wSum + w], [0, 0])
+  return vSum / wSum
 }
 
 function getRank (name: string, ranks: string[]) {
@@ -42,8 +43,8 @@ export function getPreference (userRanking: string[], gamelist: string) {
     const value = getAverage(relatedChars.map((name) => {
       const userRank = getRank(name, userRanking)
       const popRank = getRank(name, popRanking)
-      return Math.tanh((popRank - userRank) / length) / (2 + Math.min(userRank, popRank))
-    })) * 4
+      return [Math.tanh((popRank - userRank) / length), 1 / (2 + userRank)]
+    }))
 
     preference.push({ tag, name, value })
   }

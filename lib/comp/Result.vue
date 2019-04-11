@@ -18,17 +18,17 @@
     </div>
 
     <collapse-view initial="open" class="section">
-      <h3 slot="header">投票结果</h3>
-      <table>
+      <h3 slot="header">测试结果</h3>
+      <table class="result">
         <tr>
-          <th>排名</th>
-          <th>姓名</th>
-          <th>称号</th>
+          <th class="index">排名</th>
+          <th class="name">姓名</th>
+          <th class="nick">称号</th>
         </tr>
         <tr v-for="(name, index) in ranking" :key="index">
-          <td>{{ index + 1 }}</td>
-          <td>{{ name }}</td>
-          <td>{{ charMap[name].nick }}</td>
+          <td class="index">{{ index + 1 }}</td>
+          <td class="name">{{ name }}</td>
+          <td class="nick">{{ charMap[name].nick }}</td>
         </tr>
       </table>
     </collapse-view>
@@ -118,6 +118,11 @@ export default {
 
 .row
   margin 1rem 0
+
+.result
+  @media (max-width 599px)
+    th.nick, td.nick
+      display none
 
 .high-pref
   font-weight bold
