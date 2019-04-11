@@ -23,6 +23,14 @@ export default {
   display inline-block
   position relative
   margin 0 1.5em
+  width 10em
+
+  &.lg
+    font-size 1.125rem
+  &.md
+    font-size 1rem
+  &.sm
+    font-size .75rem
 
   .rank
     color $textColor
@@ -47,18 +55,5 @@ export default {
 
     .name
       font-size 1.2em
-
-  &.lg, &.md, &.sm
-    width 180px
-    font-size 1.1rem
-
-  @media (min-width 500px)
-    &.md
-      width 150px
-      font-size 1rem
-
-    &.sm
-      width 126px
-      font-size 0.9rem
 
 </style>

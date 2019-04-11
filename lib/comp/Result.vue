@@ -2,19 +2,21 @@
   <div>
     <h2 class="tac">您的前 {{ ranking.length }} 位本命角色排行</h2>
 
-    <div
-      v-for="[size, start, end] in rankingGroups"
-      class="tac row"
-      :key="start"
-    >
-      <ResultChar
-        v-for="(name, index) in ranking.slice(start, end)"
-        :key="index"
-        :rank="index + start + 1"
-        :node="charMap[name]"
-        :face="face"
-        :size="size"
-      />
+    <div class="ranking">
+      <div
+        v-for="[size, start, end] in rankingGroups"
+        class="tac row"
+        :key="start"
+      >
+        <ResultChar
+          v-for="(name, index) in ranking.slice(start, end)"
+          :key="index"
+          :rank="index + start + 1"
+          :node="charMap[name]"
+          :face="face"
+          :size="size"
+        />
+      </div>
     </div>
 
     <collapse-view initial="open" class="section">
@@ -93,7 +95,7 @@ import Button from '@theme-uzkk/components/Button'
 import CollapseView from '@theme-uzkk/components/CollapseView'
 import ResultChar from './ResultChar'
 import { charMap } from '../data'
-import { getPreference, group5, getCharactersInRange } from '../utils'
+import { getPreference, groupByWidth, getCharactersInRange } from '../utils'
 
 export default {
   components: {
@@ -104,6 +106,10 @@ export default {
 
   props: ['ranking', 'face', 'range', 'questionCount'],
 
+  data: () => ({
+    width: innerWidth,
+  }),
+
   created () {
     this.charMap = charMap
     this.charactersInRange = getCharactersInRange(this.range)
@@ -111,10 +117,19 @@ export default {
     this.highPref = this.preference.filter(tag => tag.value >= 0.5)
   },
 
+  mounted () {
+    this.onResize = () => this.width = innerWidth
+    addEventListener('resize', this.onResize)
+  },
+
   computed: {
     rankingGroups () {
-      return group5(this.ranking.length)
+      return groupByWidth(this.ranking.length, this.width)
     },
+  },
+
+  beforeDestroy () {
+    removeEventListener('resize', this.onResize)
   },
 }
 
@@ -122,8 +137,10 @@ export default {
 
 <style lang="stylus" scoped>
 
-.row
-  margin 1rem 0
+.ranking
+  margin-bottom 2rem
+  .row
+    margin 1rem 0
 
 .result
   @media (max-width 568px)

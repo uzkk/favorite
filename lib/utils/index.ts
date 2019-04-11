@@ -49,10 +49,13 @@ export function getPreference (userRanking: string[], range: string) {
     .sort((a, b) => a.value > b.value ? -1 : 1)
 }
 
-export function group (length: number, groupLength: number, startIndex: number) {
+type Group = [string, number, number]
+
+function group (length: number, groupLength: number, startIndex: number = 0) {
+  length -= startIndex
   const groups = new Array(Math.ceil(length / groupLength)).fill(undefined)
   groups[groups.length - 1] = length % groupLength
-  return groups.map((_, index): [string, number, number] => {
+  return groups.map((_, index): Group => {
     if (index < groups.length - 1) {
       const start = groupLength * index + startIndex
       return ['sm', start, groupLength + start]
@@ -62,19 +65,66 @@ export function group (length: number, groupLength: number, startIndex: number) 
   })
 }
 
-export function group5 (length: number): [string, number, number][] {
-  switch (length) {
-    case 1: return [['lg', 0, 1]]
-    case 2: return [['lg', 0, 2]]
-    case 3: return [['lg', 0, 1], ['md', 1, 3]]
-    case 4: return [['lg', 0, 1], ['md', 1, 4]]
-    case 5: return [['lg', 0, 2], ['md', 2, 5]]
-    case 6: return [['lg', 0, 1], ['lg', 1, 3], ['md', 3, 6]]
-    case 7: return [['lg', 0, 2], ['lg', 2, 4], ['md', 4, 7]]
-    default: return [
-      ['lg', 0, 2],
-      ['md', 2, 5],
-      ...group(length - 5, 5, 5),
-    ]
-  }
+const groupMap: Record<number, (length: number) => Group[]> = {
+  1 (length) {
+    return group(length, 1)
+  },
+  2 (length) {
+    switch (length % 2) {
+      case 0: return group(length, 2)
+      case 1: return [['lg', 0, 1], ...group(length, 2, 1)]
+    }
+  },
+  3 (length) {
+    switch (length % 3) {
+      case 0: return [['lg', 0, 1], ['md', 1, 3], ...group(length, 3, 3)]
+      case 1: return [['lg', 0, 1], ...group(length, 3, 1)]
+      case 2: return [['lg', 0, 2], ...group(length, 3, 2)]
+    }
+  },
+  4 (length) {
+    if (length === 1) return [['lg', 0, 1]]
+    switch (length % 4) {
+      case 0: return [['lg', 0, 1], ['md', 1, 4], ...group(length, 4, 4)]
+      case 1: return [['lg', 0, 2], ['md', 2, 5], ...group(length, 4, 5)]
+      case 2: return [['lg', 0, 2], ...group(length, 4, 2)]
+      case 3: return [['lg', 0, 1], ['md', 2, 3], ...group(length, 4, 3)]
+    }
+  },
+  5 (length) {
+    if (length === 1) return [['lg', 0, 1]]
+    if (length === 2) return [['lg', 0, 2]]
+    if (length === 3) return [['lg', 0, 1], ['md', 1, 3]]
+    switch (length % 5) {
+      case 0: return [['lg', 0, 2], ['md', 2, 5], ...group(length, 5, 5)]
+      case 1: return [['lg', 0, 1], ['md', 1, 3], ['md', 3, 6], ...group(length, 5, 6)]
+      case 2: return [['lg', 0, 1], ['md', 1, 4], ['md', 4, 7], ...group(length, 5, 7)]
+      case 3: return [['lg', 0, 2], ['md', 2, 5], ['md', 5, 8], ...group(length, 5, 8)]
+      case 4: return [['lg', 0, 1], ['md', 1, 4], ...group(length, 5, 4)]
+    }
+  },
+  6 (length) {
+    if (length === 1) return [['lg', 0, 1]]
+    if (length === 2) return [['lg', 0, 2]]
+    if (length === 3) return [['lg', 0, 1], ['md', 1, 3]]
+    if (length === 4) return [['lg', 0, 1], ['md', 1, 4]]
+    if (length === 5) return [['lg', 0, 2], ['md', 2, 5]]
+    switch (length % 6) {
+      case 0: return [['lg', 0, 1], ['md', 1, 3], ['md', 3, 6], ...group(length, 6, 6)]
+      case 1: return [['lg', 0, 1], ['md', 1, 4], ['md', 4, 7], ...group(length, 6, 7)]
+      case 2: return [['lg', 0, 2], ['md', 2, 5], ['md', 5, 8], ...group(length, 6, 8)]
+      case 3: return [['lg', 0, 2], ['md', 2, 5], ['md', 5, 9], ...group(length, 6, 9)]
+      case 4: return [['lg', 0, 2], ['md', 2, 5], ['sm', 5, 10], ...group(length, 6, 10)]
+      case 5: return [['lg', 0, 2], ['md', 2, 6], ['sm', 6, 11], ...group(length, 6, 11)]
+    }
+  },
+}
+
+// .main-container padding 1em (+ scrollbar 1em) = 48px
+// .char-view = 16px * (10 + 1.5 * 2) = 208px
+// .char-view.lg = 208px * 1.125 = 234px
+// .char-view.sm = 208px * 0.75 = 156px
+export function groupByWidth (length: number, width: number) {
+  const groupLength = Math.max(Math.min(Math.floor((width - 48) / 156), 6), 1)
+  return groupMap[groupLength](length)
 }
