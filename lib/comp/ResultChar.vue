@@ -1,7 +1,7 @@
 <template>
   <div class="char-view" :class="size">
     <div class="rank">第 {{ rank }} 位</div>
-    <img :src="src" :alt="node.name">
+    <img :src="$uzkk.favoriteImage(node.id, face)" :alt="node.name">
     <div class="info">
       <div class="name">{{ node.name }}</div>
       <div class="nick">{{ node.nick }}</div>
@@ -11,16 +11,8 @@
 
 <script>
 
-import { getCharImage } from '../utils'
-
 export default {
   props: ['node', 'face', 'size', 'rank'],
-
-  computed: {
-    src () {
-      return getCharImage(this.node.id, this.face)
-    },
-  },
 }
 
 </script>
