@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2 class="tac">您的前 {{ ranking.length }} 位本命角色排行</h2>
+
     <div
       v-for="[size, start, end] in rankingGroups"
       class="tac row"
@@ -15,27 +16,32 @@
         :size="size"
       />
     </div>
-    <collapse-view initial="open" class="result section-container">
-      <h3 slot="header">投票结果</h3>
-      <table>
+
+    <collapse-view initial="open" class="section">
+      <h3 slot="header">测试结果</h3>
+      <table class="result">
         <tr>
-          <th>排名</th>
-          <th>姓名</th>
-          <th>称号</th>
+          <th class="index">排名</th>
+          <th class="name">姓名</th>
+          <th class="nick">称号</th>
         </tr>
         <tr v-for="(name, index) in ranking" :key="index">
-          <td>{{ index + 1 }}</td>
-          <td>{{ name }}</td>
-          <td>{{ charMap[name].nick }}</td>
+          <td class="index">{{ index + 1 }}</td>
+          <td class="name">{{ name }}</td>
+          <td class="nick">{{ charMap[name].nick }}</td>
         </tr>
       </table>
     </collapse-view>
-    <collapse-view initial="open" class="preference section-container">
+
+    <collapse-view initial="open" class="section">
       <h3 slot="header">偏好分数</h3>
-      <p v-if="ranking.length < 7 || !preference.length">
+      <p v-if="ranking.length < 7">
         排名数量过少，不予统计。
       </p>
-      <div v-else>
+      <p v-else-if="!preference.length">
+        未找到您可能的偏好标签。
+      </p>
+      <template v-else>
         <div v-if="highPref.length > 0" class="tac">
           <p>幻想乡众贤者开会后一致认为，您极有可能属于下列人群：</p>
           <p>
@@ -55,13 +61,14 @@
             <td>{{ value.toFixed(3) }}</td>
           </tr>
         </table>
-      </div>
+      </template>
     </collapse-view>
-    <div class="button-container tac">
+
+    <div class="button-container">
       <Button
         title="返回主界面"
         type="warning"
-        @click="backToSettings"
+        @click="$emit('next', 'Settings')"
       >
         返回主界面
       </Button>
@@ -81,7 +88,7 @@ import Button from '@theme-uzkk/components/Button'
 import CollapseView from '@theme-uzkk/components/CollapseView'
 import ResultChar from './ResultChar'
 import { charMap } from '../data'
-import { getPreference, group } from '../utils'
+import { getPreference, group5 } from '../utils'
 
 export default {
   components: {
@@ -94,38 +101,13 @@ export default {
 
   created () {
     this.charMap = charMap
+    this.preference = getPreference(this.ranking, this.gamelist)
+    this.highPref = this.preference.filter(tag => tag.value >= 0.5)
   },
 
   computed: {
     rankingGroups () {
-      switch (this.ranking.length) {
-        case 1: return [['lg', 0, 1]]
-        case 2: return [['lg', 0, 2]]
-        case 3: return [['lg', 0, 1], ['md', 1, 3]]
-        case 4: return [['lg', 0, 1], ['md', 1, 4]]
-        case 5: return [['lg', 0, 2], ['md', 2, 5]]
-        case 6: return [['lg', 0, 1], ['lg', 1, 3], ['md', 3, 6]]
-        case 7: return [['lg', 0, 2], ['lg', 2, 4], ['md', 4, 7]]
-        default: return [
-          ['lg', 0, 2],
-          ['md', 2, 5],
-          ...group(this.ranking.length - 5, 5, 5),
-        ]
-      }
-    },
-
-    preference () {
-      return getPreference(this.ranking, this.gamelist)
-    },
-
-    highPref () {
-      return this.preference.filter(tag => tag.value >= 0.5)
-    }
-  },
-
-  methods: {
-    backToSettings () {
-      this.$emit('next', 'Settings')
+      return group5(this.ranking.length)
     },
   },
 }
@@ -137,28 +119,15 @@ export default {
 .row
   margin 1rem 0
 
-.section-container
-  h3
-    margin 0
-
-  table
-    max-width 100%
-    border-collapse collapse
-    margin 1.5rem auto 0
-    text-align center
-
-  tr
-    border-top 1px solid #dfe2e5
-    &:nth-child(2n)
-      background-color #f6f8fa
-
-  th, td
-    border 1px solid #dfe2e5
-    padding .6em 1em
+.result
+  @media (max-width 599px)
+    th.nick, td.nick
+      display none
 
 .high-pref
   font-weight bold
   margin auto 0.5em
   font-size 1.2em
+  display inline-block
 
 </style>

@@ -7,8 +7,9 @@ export function getCharImage (id: number, face: string) {
   return `${TH_CHAR_PATH}/${face}/c${String(id).padStart(3, '0')}.png`
 }
 
-function getAverage (list: number[]) {
-  return list.reduce((sum, item) => sum + item, 0) / list.length
+function getAverage (list: [number, number][]) {
+  const [vSum, wSum] = list.reduce(([vSum, wSum], [v, w]) => [vSum + v * w, wSum + w], [0, 0])
+  return vSum / wSum
 }
 
 function getRank (name: string, ranks: string[]) {
@@ -42,8 +43,8 @@ export function getPreference (userRanking: string[], gamelist: string) {
     const value = getAverage(relatedChars.map((name) => {
       const userRank = getRank(name, userRanking)
       const popRank = getRank(name, popRanking)
-      return Math.tanh((popRank - userRank) / length) / (2 + Math.min(userRank, popRank))
-    })) * 4
+      return [Math.tanh((popRank - userRank) / length), 1 / (2 + userRank)]
+    }))
 
     preference.push({ tag, name, value })
   }
@@ -64,4 +65,21 @@ export function group (length: number, groupLength: number, startIndex: number) 
     const end = length + startIndex
     return ['sm', end - (length % groupLength || groupLength), end]
   })
+}
+
+export function group5 (length: number): [string, number, number][] {
+  switch (length) {
+    case 1: return [['lg', 0, 1]]
+    case 2: return [['lg', 0, 2]]
+    case 3: return [['lg', 0, 1], ['md', 1, 3]]
+    case 4: return [['lg', 0, 1], ['md', 1, 4]]
+    case 5: return [['lg', 0, 2], ['md', 2, 5]]
+    case 6: return [['lg', 0, 1], ['lg', 1, 3], ['md', 3, 6]]
+    case 7: return [['lg', 0, 2], ['lg', 2, 4], ['md', 4, 7]]
+    default: return [
+      ['lg', 0, 2],
+      ['md', 2, 5],
+      ...group(length - 5, 5, 5),
+    ]
+  }
 }

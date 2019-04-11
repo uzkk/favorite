@@ -71,7 +71,7 @@
           <Button
             title="返回主界面"
             type="warning"
-            @click="backToSettings"
+            @click="$emit('next', 'Settings')"
           >
             返回主界面
           </Button>
@@ -110,9 +110,6 @@ export default {
   },
 
   methods: {
-    backToSettings () {
-      this.$emit('next', 'Settings')
-    },
     moveOn (back) {
       if (this.getNextPair(back)) return
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="section-container">
+    <div class="section">
       <p class="title">
         <Checkbox v-model="allSelected" label="所有作品"/>
       </p>
@@ -49,7 +49,7 @@
         </li>
       </ul>
     </div>
-    <div class="section-container">
+    <div class="section">
       <p class="list">
         <span style="margin-right: 1em">选择排名数：</span>
         <ul class="inline">
@@ -67,17 +67,14 @@
         </ul>
       </p>
     </div>
-    <div class="button-container tac">
-      <Button
-        @click="$emit('next', 'Select', { gamelist, ranknum, face })"
-        :disabled="!gamelist.length"
-      >
+    <div class="button-container">
+      <Button @click="nextPart" :disabled="!gamelist.length">
         开始
       </Button>
-      <Button
-        title="关于本命测试"
-        @click="$router.push(UZKK_FAVORITE_BASE + 'about.html')"
-      >
+      <Button @click="useFallback">
+        恢复默认设置
+      </Button>
+      <Button @click="toAboutPage">
         关于本命测试
       </Button>
     </div>
@@ -90,17 +87,14 @@ import Radio from '@theme-uzkk/components/Radio'
 import Button from '@theme-uzkk/components/Button'
 import Checkbox from '@theme-uzkk/components/Checkbox'
 import { games, faces } from '../data'
+import { getSettings, setSettings, useFallback } from '../utils/settings'
 
 const ranks = [1, 5, 7, 10, 20, 50, 100]
 
 export default {
   components: { Button, Checkbox, Radio },
 
-  data: () => ({
-    ranknum: 1,
-    face: 'default',
-    gamelist: 'abcdefghijk',
-  }),
+  data: () => getSettings(),
 
   created () {
     this.faces = faces
@@ -178,15 +172,17 @@ export default {
         this.gamelist = chars.sort().join('')
       }
     },
+    nextPart () {
+      this.$emit('next', 'Select', setSettings(this))
+    },
+    toAboutPage () {
+      setSettings(this)
+      this.$router.push(this.UZKK_FAVORITE_BASE + 'about.html')
+    },
+    useFallback () {
+      useFallback(this)
+    },
   },
 }
 
 </script>
-
-<style lang="stylus" scoped>
-
-.opt-item
-  display inline-block
-  width 4em
-
-</style>
