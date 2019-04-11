@@ -9,7 +9,6 @@
 import Result from './Result'
 import Select from './Select'
 import Settings from './Settings'
-import { getCharImage } from '../utils'
 import { characters, faces } from '../data'
 import FadeSlideTransition from '@theme-uzkk/transitions/FadeSlide'
 
@@ -31,7 +30,7 @@ export default {
       for (const face in faces) {
         const link = document.head.appendChild(document.createElement('link'))
         link.rel = 'prefetch'
-        link.href = getCharImage(id, face)
+        link.href = this.$uzkk.favoriteImage(id, face)
       }
     })
   },

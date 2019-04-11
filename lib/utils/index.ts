@@ -1,12 +1,6 @@
 // @ts-ignore
 import { ranks, charMap, tags } from '../data'
 
-declare const TH_CHAR_PATH: string
-
-export function getCharImage (id: number, face: string) {
-  return `${TH_CHAR_PATH}/${face}/c${String(id).padStart(3, '0')}.png`
-}
-
 function getAverage (list: [number, number][]) {
   const [vSum, wSum] = list.reduce(([vSum, wSum], [v, w]) => [vSum + v * w, wSum + w], [0, 0])
   return vSum / wSum

@@ -49,24 +49,30 @@
         </li>
       </ul>
     </div>
+
     <div class="section">
       <p class="list">
-        <span style="margin-right: 1em">选择排名数：</span>
+        <span>选择排名数：</span>
         <ul class="inline">
           <li class="inline short" v-for="(num, index) in ranks" :key="index">
             <Radio :label="num" v-model="ranknum"/>
           </li>
         </ul>
       </p>
+      <hr/>
       <p class="list">
-        <span>选择立绘表情：</span>
+        <span style="margin-right: -1em">选择立绘表情：</span>
         <ul class="inline">
           <li class="inline short" v-for="(key, value) in faces" :key="value">
             <Radio :label="value" v-model="face">{{ key }}</Radio>
           </li>
         </ul>
       </p>
+      <p class="comment" v-if="face === 'trauma'">
+        注：此分类缺少部分图片，将自动使用默认图片补全。
+      </p>
     </div>
+
     <div class="button-container">
       <Button @click="nextPart" :disabled="!gamelist.length">
         开始

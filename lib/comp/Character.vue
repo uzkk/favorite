@@ -23,7 +23,6 @@
 <script>
 
 import '../styles/icons.css'
-import { getCharImage } from '../utils'
 
 export default {
   props: ['node', 'face'],
@@ -40,7 +39,7 @@ export default {
 
   computed: {
     src () {
-      return getCharImage(this.node.id, this.face)
+      return this.$uzkk.favoriteImage(this.node.id, this.face)
     },
   },
 
