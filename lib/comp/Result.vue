@@ -14,7 +14,7 @@
           :rank="index + start + 1"
           :node="charMap[name]"
           :face="face"
-          :size="size"
+          :class="size"
         />
       </div>
     </div>
@@ -114,7 +114,7 @@ export default {
     this.charMap = charMap
     this.charactersInRange = getCharactersInRange(this.range)
     this.preference = getPreference(this.ranking, this.range)
-    this.highPref = this.preference.filter(tag => tag.value >= 0.5)
+    this.highPref = this.preference.filter(tag => tag.value >= 0.2)
   },
 
   mounted () {

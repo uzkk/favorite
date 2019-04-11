@@ -1,5 +1,5 @@
 <template>
-  <div class="char-view" :class="size">
+  <div class="char-view">
     <div class="rank">第 {{ rank }} 位</div>
     <img :src="$uzkk.favoriteImage(node.id, face)" :alt="node.name">
     <div class="info">
@@ -12,7 +12,7 @@
 <script>
 
 export default {
-  props: ['node', 'face', 'size', 'rank'],
+  props: ['node', 'face', 'rank'],
 }
 
 </script>
@@ -22,8 +22,8 @@ export default {
 .char-view
   display inline-block
   position relative
-  margin 0 1.5em
-  width 10em
+  width 13em
+  padding 0 1.5em
 
   &.lg
     font-size 1.125rem
@@ -31,6 +31,7 @@ export default {
     font-size 1rem
   &.sm
     font-size .75rem
+    max-width 50%
 
   .rank
     color $textColor

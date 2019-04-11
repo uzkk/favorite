@@ -66,9 +66,6 @@ function group (length: number, groupLength: number, startIndex: number = 0) {
 }
 
 const groupMap: Record<number, (length: number) => Group[]> = {
-  1 (length) {
-    return group(length, 1)
-  },
   2 (length) {
     switch (length % 2) {
       case 0: return group(length, 2)
@@ -120,11 +117,11 @@ const groupMap: Record<number, (length: number) => Group[]> = {
   },
 }
 
-// .main-container padding 1em (+ scrollbar 1em) = 48px
+// .main-container padding 2em (+ scrollbar 1em) = 48px
 // .char-view = 16px * (10 + 1.5 * 2) = 208px
 // .char-view.lg = 208px * 1.125 = 234px
 // .char-view.sm = 208px * 0.75 = 156px
 export function groupByWidth (length: number, width: number) {
-  const groupLength = Math.max(Math.min(Math.floor((width - 49) / 156), 6), 1)
+  const groupLength = Math.max(Math.min(Math.floor((width - 49) / 156), 6), 2)
   return groupMap[groupLength](length)
 }
