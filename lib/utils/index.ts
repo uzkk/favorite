@@ -1,45 +1,46 @@
 // @ts-ignore
-import { ranks, charMap, tags } from '../data'
-
-function getAverage (list: [number, number][]) {
-  const [vSum, wSum] = list.reduce(([vSum, wSum], [v, w]) => [vSum + v * w, wSum + w], [0, 0])
-  return vSum / wSum
-}
+import { ranks, charMap, tags, charList } from '../data'
+import SortNode from './SortNode'
 
 function getRank (name: string, ranks: string[]) {
   const index = ranks.indexOf(name)
   return index === -1 ? ranks.length : index
 }
 
-function hasIntersection (str1: string, str2: string) {
-  for (const char of str1) {
-    if (str2.includes(char)) return true
-  }
-  return false
+export function getCharactersInRange (range: string, chars: string[] = charList) {
+  return chars.filter((name) => {
+    for (const char of charMap[name].appearence) {
+      if (range.includes(char)) return true
+    }
+    return false
+  })
 }
 
-export function getPreference (userRanking: string[], gamelist: string) {
+export function getPreference (userRanking: string[], range: string) {
   const { length } = userRanking
-  const popRanking = (ranks.cn7 as string[])
-    .filter(name => hasIntersection(charMap[name].appearence, gamelist))
-    .slice(0, length)
-  const rankingChars = Array.from(new Set([...popRanking, ...userRanking]))
+  let denominator = 0
+  const popRanking = getCharactersInRange(range, ranks.cn7).slice(0, length)
+  const rankingChars = Array
+    .from(new Set([...popRanking, ...userRanking]))
+    .map((name) => {
+      const userRank = getRank(name, userRanking)
+      const popRank = getRank(name, popRanking)
+      const weight = 1 / (2 + userRank)
+      denominator += weight
+      return {
+        node: charMap[name] as SortNode,
+        value: Math.tanh((popRank - userRank) / length) * weight,
+      }
+    })
 
   const preference = []
   for (const tag in tags) {
     const name = tags[tag]
 
-    const relatedChars = rankingChars.filter((name) => {
-      return charMap[name].tags.includes(tag)
-    })
-    if (!relatedChars.length) continue
+    const chars = rankingChars.filter(({ node }) => node.tags.includes(tag))
+    if (!chars.length) continue
 
-    const value = getAverage(relatedChars.map((name) => {
-      const userRank = getRank(name, userRanking)
-      const popRank = getRank(name, popRanking)
-      return [Math.tanh((popRank - userRank) / length), 1 / (2 + userRank)]
-    }))
-
+    const value = chars.reduce((sum, { value }) => sum + value, 0) / denominator
     preference.push({ tag, name, value })
   }
 

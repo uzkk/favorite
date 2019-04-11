@@ -19,6 +19,11 @@
 
     <collapse-view initial="open" class="section">
       <h3 slot="header">测试结果</h3>
+      <p>
+        本次测试中，您通过 {{ questionCount }}
+        轮回答，从共计 {{ charactersInRange.length }}
+        名角色中选出了前 {{ ranking.length }} 名。
+      </p>
       <table class="result">
         <tr>
           <th class="index">排名</th>
@@ -88,7 +93,7 @@ import Button from '@theme-uzkk/components/Button'
 import CollapseView from '@theme-uzkk/components/CollapseView'
 import ResultChar from './ResultChar'
 import { charMap } from '../data'
-import { getPreference, group5 } from '../utils'
+import { getPreference, group5, getCharactersInRange } from '../utils'
 
 export default {
   components: {
@@ -97,11 +102,12 @@ export default {
     Button,
   },
 
-  props: ['ranking', 'face', 'gamelist'],
+  props: ['ranking', 'face', 'range', 'questionCount'],
 
   created () {
     this.charMap = charMap
-    this.preference = getPreference(this.ranking, this.gamelist)
+    this.charactersInRange = getCharactersInRange(this.range)
+    this.preference = getPreference(this.ranking, this.range)
     this.highPref = this.preference.filter(tag => tag.value >= 0.5)
   },
 
