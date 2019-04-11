@@ -13,6 +13,20 @@ export default class SortNode {
   ) {}
 
   /**
+   * clone a node
+   */
+  clone () {
+    return new SortNode(
+      this.id,
+      this.name,
+      this.nick,
+      this.appearence,
+      this.meta,
+      this.tags,
+    )
+  }
+
+  /**
    * get current rank
    */
   rank () {

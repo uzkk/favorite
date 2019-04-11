@@ -12,7 +12,7 @@
           <ul>
             <li class="inline medium" v-for="(game, index) in games.integer" :key="index">
               <Checkbox
-                :value="gamelist.includes(game.tag)"
+                :value="range.includes(game.tag)"
                 :label="game.name"
                 @update="toggleGame(game.tag)"
               />
@@ -26,7 +26,7 @@
           <ul>
             <li class="inline medium" v-for="(game, index) in games.others" :key="index">
               <Checkbox
-                :value="gamelist.includes(game.tag)"
+                :value="range.includes(game.tag)"
                 :label="game.name"
                 @update="toggleGame(game.tag)"
               />
@@ -40,7 +40,7 @@
           <ul>
             <li class="inline medium" v-for="(game, index) in games.old" :key="index">
               <Checkbox
-                :value="gamelist.includes(game.tag)"
+                :value="range.includes(game.tag)"
                 :label="game.name"
                 @update="toggleGame(game.tag)"
               />
@@ -74,7 +74,7 @@
     </div>
 
     <div class="button-container">
-      <Button @click="nextPart" :disabled="!gamelist.length">
+      <Button @click="nextPart" :disabled="!range.length">
         开始
       </Button>
       <Button @click="useFallback">
@@ -115,67 +115,67 @@ export default {
   computed: {
     allSelected: {
       get () {
-        return this.gamelist.length === this.all.length
+        return this.range.length === this.all.length
       },
       set (value) {
-        this.gamelist = value ? this.all : ''
+        this.range = value ? this.all : ''
       },
     },
     allStgSelected: {
       get () {
         for (let game of this.stg) {
-          if (!this.gamelist.includes(game)) {
+          if (!this.range.includes(game)) {
             return false
           }
         }
         return true
       },
       set (value) {
-        const noSTG = this.gamelist.match(/^[A-Z]*/)[0]
-        this.gamelist = noSTG + (value ? this.stg : '')
+        const noSTG = this.range.match(/^[A-Z]*/)[0]
+        this.range = noSTG + (value ? this.stg : '')
       },
     },
     otherSelected: {
       get () {
         for (let game of this.other) {
-          if (!this.gamelist.includes(game)) {
+          if (!this.range.includes(game)) {
             return false
           }
         }
         return true
       },
       set (value) {
-        const STG = this.gamelist.match(/[F-Za-z]*$/)[0]
-        this.gamelist = (value ? this.other : '') + STG
+        const STG = this.range.match(/[F-Za-z]*$/)[0]
+        this.range = (value ? this.other : '') + STG
       },
     },
     oldSelected: {
       get () {
         for (let game of this.old) {
-          if (!this.gamelist.includes(game)) {
+          if (!this.range.includes(game)) {
             return false
           }
         }
         return true
       },
       set (value) {
-        const STG = this.gamelist.match(/[a-z]*$/)[0]
-        const other = this.gamelist.match(/^[A-E]*/)[0]
-        this.gamelist = other + (value ? this.old : '') + STG
+        const STG = this.range.match(/[a-z]*$/)[0]
+        const other = this.range.match(/^[A-E]*/)[0]
+        this.range = other + (value ? this.old : '') + STG
       },
     },
   },
 
   methods: {
     toggleGame (tag) {
-      const index = this.gamelist.indexOf(tag)
-      const chars = this.gamelist.split('')
+      const index = this.range.indexOf(tag)
+      const chars = this.range.split('')
       if (index > -1) {
         chars.splice(index, 1)
-        this.gamelist = chars.join('')
+        this.range = chars.join('')
       } else {
         chars.push(tag)
-        this.gamelist = chars.sort().join('')
+        this.range = chars.sort().join('')
       }
     },
     nextPart () {

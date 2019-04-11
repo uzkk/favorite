@@ -84,34 +84,31 @@
 <script>
 
 import Button from '@theme-uzkk/components/Button'
+import { getCharactersInRange } from '../utils'
 import SortNode from '../utils/SortNode'
 import sort from '../utils/sort.mixin'
-import { characters } from '../data'
 import Character from './Character'
+import { charMap } from '../data'
 
 export default {
   components: { Character, Button },
 
   mixins: [sort],
 
-  props: ['gamelist', 'ranknum', 'face'],
+  props: ['range', 'ranknum', 'face'],
 
   created () {
     this.root = new SortNode(0)
-    for (const char of characters) {
-      for (const tag of char[3]) {
-        if (this.gamelist.includes(tag)) {
-          this.root.add(new SortNode(...char), false)
-          break
-        }
-      }
-    }
+    getCharactersInRange(this.range).forEach((name) => {
+      this.root.add(charMap[name].clone())
+    })
     this.init()
   },
 
   methods: {
     moveOn (back) {
       if (this.getNextPair(back)) return
+      const { questionCount } = this
 
       // move to next part
       const ranking = []
@@ -121,7 +118,7 @@ export default {
         if (!node) break
         ranking.push(node.name)
       }
-      this.$emit('next', 'Result', { ranking })
+      this.$emit('next', 'Result', { ranking, questionCount })
     },
   },
 }

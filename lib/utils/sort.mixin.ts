@@ -49,7 +49,7 @@ export default {
       }
       return [node.children[both[0]], node.children[both[1]]]
     },
-    getNextPair (back) {
+    getNextPair (back: boolean) {
       if (back) {
         this.currentPair = this.ask(this.root, this.currentPair)
       } else {
@@ -61,10 +61,10 @@ export default {
       }
       return false
     },
-    moveOn (back) {
-      this.getNextPair(back)
+    moveOn (back: boolean) {
+      return this.getNextPair(back)
     },
-    selectChar (index) {
+    selectChar (index: number) {
       this.backup()
       this.currentPair[index].add(this.currentPair[1 - index], false)
       this.isPrevious = false
@@ -84,7 +84,7 @@ export default {
       this.moveOn(true)
     },
     randomPick () {
-      let index = Math.floor(Math.random() * 2)
+      const index = Math.floor(Math.random() * 2)
       this.selectChar(index)
     },
     randomPickForAll () {
@@ -92,6 +92,7 @@ export default {
       this.currentPair[index].add(this.currentPair[1 - index], false)
       let pair = this.ask(this.root)
       while (pair && pair[1].level() <= this.ranknum) {
+        this.questionCount += 1
         index = Math.floor(Math.random() * 2)
         pair[index].add(pair[1 - index], false)
         pair = this.ask(this.root)

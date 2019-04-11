@@ -33,7 +33,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.2.2",
     "vuepress": "^1.0.0-alpha.47",
-    "vuepress-theme-uzkk": "^1.0.0-alpha.22"
+    "vuepress-theme-uzkk": "^1.0.0-alpha.23"
   },
   "dependencies": {
     "@uzkk/favorite-assets": "^0.0.7",

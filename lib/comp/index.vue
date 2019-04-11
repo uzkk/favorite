@@ -1,6 +1,6 @@
 <template>
   <FadeSlideTransition>
-    <component :is="phase" :key="phase" @next="updatePhase" v-bind="state"/>
+    <component class="favorite" :is="phase" :key="phase" @next="updatePhase" v-bind="state"/>
   </FadeSlideTransition>
 </template>
 
