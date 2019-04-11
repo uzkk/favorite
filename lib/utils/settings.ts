@@ -3,7 +3,7 @@ const VERSION = 1
 const getFallback = () => ({
   ranknum: 1,
   face: 'default',
-  gamelist: 'abcdefghijkABDE',
+  range: 'abcdefghijkABDE',
 })
 
 export function getSettings () {

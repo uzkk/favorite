@@ -1,7 +1,7 @@
 <template>
-  <div class="char-view" :class="size">
+  <div class="char-view">
     <div class="rank">第 {{ rank }} 位</div>
-    <img :src="src" :alt="node.name">
+    <img :src="$uzkk.favoriteImage(node.id, face)" :alt="node.name">
     <div class="info">
       <div class="name">{{ node.name }}</div>
       <div class="nick">{{ node.nick }}</div>
@@ -11,16 +11,8 @@
 
 <script>
 
-import { getCharImage } from '../utils'
-
 export default {
-  props: ['node', 'face', 'size', 'rank'],
-
-  computed: {
-    src () {
-      return getCharImage(this.node.id, this.face)
-    },
-  },
+  props: ['node', 'face', 'rank'],
 }
 
 </script>
@@ -30,7 +22,16 @@ export default {
 .char-view
   display inline-block
   position relative
-  margin 0 1.5em
+  width 13em
+  padding 0 1.5em
+
+  &.lg
+    font-size 1.125rem
+  &.md
+    font-size 1rem
+  &.sm
+    font-size .75rem
+    max-width 50%
 
   .rank
     color $textColor
@@ -55,18 +56,5 @@ export default {
 
     .name
       font-size 1.2em
-
-  &.lg, &.md, &.sm
-    width 180px
-    font-size 1.1rem
-
-  @media (min-width 500px)
-    &.md
-      width 150px
-      font-size 1rem
-
-    &.sm
-      width 126px
-      font-size 0.9rem
 
 </style>
