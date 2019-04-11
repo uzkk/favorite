@@ -85,8 +85,8 @@ const groupMap: Record<number, (length: number) => Group[]> = {
   4 (length) {
     if (length === 1) return [['lg', 0, 1]]
     switch (length % 4) {
-      case 0: return [['lg', 0, 1], ['md', 1, 4], ...group(length, 4, 4)]
-      case 1: return [['lg', 0, 2], ['md', 2, 5], ...group(length, 4, 5)]
+      case 0: return [['lg', 0, 1], ['sm', 1, 4], ...group(length, 4, 4)]
+      case 1: return [['lg', 0, 2], ['sm', 2, 5], ...group(length, 4, 5)]
       case 2: return [['lg', 0, 2], ...group(length, 4, 2)]
       case 3: return [['lg', 0, 1], ['md', 2, 3], ...group(length, 4, 3)]
     }
@@ -125,6 +125,6 @@ const groupMap: Record<number, (length: number) => Group[]> = {
 // .char-view.lg = 208px * 1.125 = 234px
 // .char-view.sm = 208px * 0.75 = 156px
 export function groupByWidth (length: number, width: number) {
-  const groupLength = Math.max(Math.min(Math.floor((width - 48) / 156), 6), 1)
+  const groupLength = Math.max(Math.min(Math.floor((width - 49) / 156), 6), 1)
   return groupMap[groupLength](length)
 }
