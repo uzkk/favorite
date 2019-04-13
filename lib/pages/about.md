@@ -24,6 +24,10 @@ $$w_k=\frac{\sum_{i\in\mathcal{I}}u_i v_i}{\sum_{i=1}^{n}v_i}$$
 
 ## 更新日志
 
+- 可以选择全部角色进行排序了
+- 为十六夜咲夜和部分旧作角色添加了标签
+- 优化了结果页面对手机屏幕的适配
+
 ### 2019-04-12
 
 - 新增了“疮痍”系列图片
@@ -74,9 +78,10 @@ $$w_k=\frac{\sum_{i\in\mathcal{I}}u_i v_i}{\sum_{i=1}^{n}v_i}$$
 - 将全部内容翻译成了中文
 - 增删了一些角色（比如增加了冴月麟，删除了旧作与新作重合的角色）
 
-## 反馈和贡献
+## 制作人员
 
-任何遇到的问题或者想到的创意都欢迎前往 [这里](https://github.com/uzkk/favorite/issues) 提出。
+<author-view name="shigma"/>
+<author-view name="kouchya"/>
 
 ## 版权与协议
 

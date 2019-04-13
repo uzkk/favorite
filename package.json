@@ -23,7 +23,7 @@
     "lint": "eslint . --fix"
   },
   "devDependencies": {
-    "@uzkk/shared-assets": "^0.0.3",
+    "@uzkk/shared-assets": "^0.0.4",
     "@uzkk/not-found": "^1.0.1",
     "eslint": "^5.15.1",
     "eslint-config-standard": "^12.0.0",

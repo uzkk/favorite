@@ -54,10 +54,15 @@
       <p class="list">
         <span>选择排名数：</span>
         <ul class="inline">
-          <li class="inline short" v-for="(num, index) in ranks" :key="index">
-            <Radio :label="num" v-model="ranknum" :disabled="num > characters.length"/>
-          </li>
-          <li class="inline short">
+          <template v-for="(num, index) in ranks">
+            <li
+              :key="index"
+              class="inline short"
+              v-if="num <= characters.length || !characters.length"
+            >
+              <Radio :label="num" v-model="ranknum"/>
+            </li>
+          </template><li class="inline short" key="-1">
             <Radio :label="Infinity" v-model="ranknum" :disabled="!characters.length">
               全选 ({{ characters.length }})
             </Radio>
