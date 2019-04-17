@@ -95,11 +95,11 @@ export default {
 
   mixins: [sort],
 
-  props: ['range', 'ranknum', 'face'],
+  props: ['characters', 'ranknum', 'face'],
 
   created () {
     this.root = new SortNode(0)
-    getCharactersInRange(this.range).forEach((name) => {
+    this.characters.forEach((name) => {
       this.root.add(charMap[name].clone())
     })
     this.init()

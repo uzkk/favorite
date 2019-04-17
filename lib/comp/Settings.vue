@@ -54,8 +54,18 @@
       <p class="list">
         <span>选择排名数：</span>
         <ul class="inline">
-          <li class="inline short" v-for="(num, index) in ranks" :key="index">
-            <Radio :label="num" v-model="ranknum"/>
+          <template v-for="(num, index) in ranks">
+            <li
+              :key="index"
+              class="inline short"
+              v-if="num <= characters.length || !characters.length"
+            >
+              <Radio :label="num" v-model="ranknum"/>
+            </li>
+          </template><li class="inline short" key="-1">
+            <Radio :label="Infinity" v-model="ranknum" :disabled="!characters.length">
+              全选 ({{ characters.length }})
+            </Radio>
           </li>
         </ul>
       </p>
@@ -69,7 +79,7 @@
         </ul>
       </p>
       <p class="comment" v-if="face === 'trauma'">
-        注：此分类缺少部分图片，将自动使用默认图片补全。
+        提示：此分类缺少部分图片，将自动使用默认图片补全。
       </p>
     </div>
 
@@ -93,9 +103,11 @@ import Radio from '@theme-uzkk/components/Radio'
 import Button from '@theme-uzkk/components/Button'
 import Checkbox from '@theme-uzkk/components/Checkbox'
 import { games, faces } from '../data'
+import { getCharactersInRange } from '../utils'
 import { getSettings, setSettings, useFallback } from '../utils/settings'
 
 const ranks = [1, 5, 7, 10, 20, 50, 100]
+const reversedRanks = ranks.slice().reverse()
 
 export default {
   components: { Button, Checkbox, Radio },
@@ -112,7 +124,19 @@ export default {
     this.all = this.other + this.old + this.stg
   },
 
+  watch: {
+    'characters.length' (value) {
+      if (this.ranknum === Infinity || !value) return
+      if (this.ranknum > value) {
+        this.ranknum = reversedRanks.find(num => num <= value)
+      }
+    },
+  },
+
   computed: {
+    characters () {
+      return getCharactersInRange(this.range)
+    },
     allSelected: {
       get () {
         return this.range.length === this.all.length
@@ -179,7 +203,8 @@ export default {
       }
     },
     nextPart () {
-      this.$emit('next', 'Select', setSettings(this))
+      const { characters } = this
+      this.$emit('next', 'Select', { characters, ...setSettings(this) })
     },
     toAboutPage () {
       setSettings(this)

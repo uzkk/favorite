@@ -23,7 +23,7 @@
       <h3 slot="header">测试结果</h3>
       <p>
         本次测试中，您通过 {{ questionCount }}
-        轮回答，从共计 {{ charactersInRange.length }}
+        轮回答，从共计 {{ characters.length }}
         名角色中选出了前 {{ ranking.length }} 名。
       </p>
       <table class="result">
@@ -104,7 +104,7 @@ export default {
     Button,
   },
 
-  props: ['ranking', 'face', 'range', 'questionCount'],
+  props: ['characters', 'ranking', 'face', 'range', 'questionCount'],
 
   data: () => ({
     width: innerWidth,
@@ -112,7 +112,6 @@ export default {
 
   created () {
     this.charMap = charMap
-    this.charactersInRange = getCharactersInRange(this.range)
     this.preference = getPreference(this.ranking, this.range)
     this.highPref = this.preference.filter(tag => tag.value >= 0.2)
   },
