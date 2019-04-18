@@ -83,6 +83,8 @@ $$w_k=\frac{\sum_{i\in\mathcal{I}}u_i v_i}{\sum_{i=1}^{n}v_i}$$
 <author-view name="shigma"/>
 <author-view name="kouchya"/>
 
+部分原作没有的称号由 @荭茶 和 @龙翼雨 提供。
+
 ## 版权与协议
 
 图片采用了画师 [dairi](https://www.pixiv.net/member_illust.php?id=4920496) 的作品。全部人物来源于东方 Project，版权属于上海爱丽丝幻乐团。

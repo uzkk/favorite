@@ -22,8 +22,6 @@
 
 <script>
 
-import '../styles/icons.css'
-
 export default {
   props: ['node', 'face'],
 
@@ -99,10 +97,13 @@ $bgColor = #0008
     color #fffc
     bottom 0
     line-height 1.6
-    padding 0.2em 0
 
     .name
       font-size 1.2em
+      padding 0.1em 0.4em 0
+
+    .nick
+      padding 0 0.4em 0.2em
 
   &:hover, &.loading
     .info
