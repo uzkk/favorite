@@ -36,7 +36,7 @@
     "vuepress-theme-uzkk": "^1.0.0-alpha.26"
   },
   "dependencies": {
-    "@uzkk/favorite-assets": "^0.0.7",
+    "@uzkk/favorite-assets": "^0.0.8",
     "js-yaml-loader": "^1.0.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.4.1"
