@@ -24,6 +24,10 @@ $$w_k=\frac{\sum_{i\in\mathcal{I}}u_i v_i}{\sum_{i=1}^{n}v_i}$$
 
 ## 更新日志
 
+- 添加了“命莲”等三个角色
+
+### 2019-04-15
+
 - 可以选择全部角色进行排序了
 - 为十六夜咲夜和部分旧作角色添加了标签
 - 优化了结果页面对手机屏幕的适配
@@ -83,9 +87,11 @@ $$w_k=\frac{\sum_{i\in\mathcal{I}}u_i v_i}{\sum_{i=1}^{n}v_i}$$
 <author-view name="shigma"/>
 <author-view name="kouchya"/>
 
+部分原作没有的称号由 @荭茶 和 @龙翼雨 提供。
+
 ## 版权与协议
 
-图片采用了画师 [dairi](https://www.pixiv.net/member_illust.php?id=4920496) 的作品。全部人物来源于东方 Project，版权属于上海爱丽丝幻乐团。
+命莲、邪眼西格玛及咪咪号的图片采用了画师 [kaoru](https://www.pixiv.net/member_illust.php?id=743845) 的作品，其他角色图片采用了画师 [dairi](https://www.pixiv.net/member_illust.php?id=4920496) 的作品。全部人物来源于东方 Project，版权属于上海爱丽丝幻乐团。
 
 源代码已经开源到 [GitHub](https://github.com/uzkk/favorite)，遵循 [MIT](https://mit-license.org/) 协议。脚本的使用，修改，复制等是免费的。
 

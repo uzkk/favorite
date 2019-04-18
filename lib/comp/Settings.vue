@@ -78,7 +78,7 @@
           </li>
         </ul>
       </p>
-      <p class="comment" v-if="face === 'trauma'">
+      <p class="comment" v-if="face !== 'default'">
         提示：此分类缺少部分图片，将自动使用默认图片补全。
       </p>
     </div>
