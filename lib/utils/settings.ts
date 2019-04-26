@@ -17,7 +17,7 @@ export function getSettings () {
   try {
     const { version, settings } = JSON.parse(oldSettings)
     if (version === VERSION) {
-      return { ...fallbackSettings, ...settings}
+      return { ...fallbackSettings, ...settings }
     } else {
       return fallbackSettings
     }

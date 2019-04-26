@@ -122,6 +122,7 @@ export default {
     this.other = 'ABDE'
     this.old = 'FGHIJ'
     this.all = this.other + this.old + this.stg
+    if (!this.ranknum) this.ranknum = Infinity
   },
 
   watch: {
